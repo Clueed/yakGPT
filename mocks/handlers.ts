@@ -1,0 +1,32 @@
+import { rest } from 'msw'
+import modelsJSON from './models.json'
+import incorrectApiKeyJSON from './incorrentApiKey.json'
+import chatCompletionString from './ChatCompletionMock'
+
+export const handlers = [
+  rest.get('https://api.openai.com/v1/models', (req, res, ctx) => {
+
+    const headerAuthorization = req.headers.get('authorization')
+
+    if (headerAuthorization?.slice(-1).toLowerCase() === 'e') {
+      return res(
+        ctx.status(401),
+        ctx.json(incorrectApiKeyJSON)
+      )
+
+    } else {
+      return res(
+        ctx.status(200),
+        ctx.json(modelsJSON),
+      )
+    }
+  }),
+  rest.post('https://api.openai.com/v1/chat/completions', (req, res, ctx) => {
+    //const responseStream = 'data: ' + JSON.stringify(chatCompetionJSON) + '\n\ndata:[DONE]'
+    //console.log(chatCompetionJSON[0])
+    return res(
+      ctx.status(200),
+      ctx.body(chatCompletionString)
+    )
+  })
+]

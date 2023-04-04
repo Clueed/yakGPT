@@ -16,6 +16,12 @@ import { useEffect, useState } from "react";
 import AudioPlayer from "@/components/AudioPlayer";
 import UIController from "@/components/UIController";
 
+
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  require('../mocks')
+}
+
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
