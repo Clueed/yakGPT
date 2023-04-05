@@ -16,6 +16,6 @@ data: {"id":"chatcmpl-71dSFXTxu7ZhNxKU3RPKg1w03vSaB","object":"chat.completion.c
 
 data: {"id":"chatcmpl-71dSFXTxu7ZhNxKU3RPKg1w03vSaB","object":"chat.completion.chunk","created":1680624347,"model":"gpt-3.5-turbo-0301","choices":[{"delta":{},"index":0,"finish_reason":"stop"}]}
 
-data:[DONE]`;
+data: [DONE]`;
 
 export default chatCompletionString;
