@@ -18,6 +18,10 @@ export const handlers = [
   rest.post(
     "https://api.openai.com/v1/chat/completions",
     async (req, res, ctx) => {
+      const pageParams = new URLSearchParams(window.location.search);
+      const scenario = pageParams.get("scenario");
+      console.log(scenario);
+
       const lastMessage = await req
         .json()
         .then((req) => req.messages.at(-1).content.toLowerCase());
@@ -32,6 +36,25 @@ export const handlers = [
       }
 
       return res(ctx.status(200), ctx.body(chatCompletionString));
+    }
+  ),
+  rest.post(
+    "https://api.openai.com/v1/audio/transcriptions",
+    async (req, res, ctx) => {
+      const pageParams = new URLSearchParams(window.location.search);
+      const scenario = pageParams.get("scenario");
+      console.log(scenario);
+
+      for (let error of OpenAiApiErrors) {
+        if (scenario === "whisper-" + error.errorString) {
+          return res(
+            ctx.status(error.statusCode),
+            ctx.body(error.errorMessage)
+          );
+        }
+      }
+
+      return res(ctx.status(200), ctx.json({ text: "hello_test" }));
     }
   ),
 ];

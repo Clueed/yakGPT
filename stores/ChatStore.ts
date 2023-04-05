@@ -204,6 +204,7 @@ export const useChatStore = create<ChatState>()(
         }));
       },
       submitMessage: async (message: Message) => {
+        console.log(message);
         // If message is empty, do nothing
         if (message.content.trim() === "") {
           console.error("Message is empty");
@@ -581,6 +582,8 @@ export const useChatStore = create<ChatState>()(
               Authorization: `Bearer ${apiKey}`,
             },
           });
+
+          console.log(response);
 
           if (response.data.error) {
             console.error("Error sending audio data:", response.data.error);

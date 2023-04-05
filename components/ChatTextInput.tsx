@@ -130,6 +130,7 @@ export default function ChatInput({ className }: { className?: string }) {
             onClick={() => doSubmit()}
             sx={{ position: "absolute", bottom: "2px", right: "2px" }}
           >
+            
             <Icon size={px("1.1rem")} stroke={1.5} />
           </ActionIcon>
         </Group>
