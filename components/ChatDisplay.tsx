@@ -108,7 +108,11 @@ const useStyles = createStyles((theme: MantineTheme) => ({
 
 const ChatDisplay = () => {
   const router = useRouter();
-  const activeChatId = router.query.chatId as string | undefined;
+  const activeChatId = router.query.chatId as string;
+
+  if (activeChatId === undefined) {
+    router.push('/')
+  }
 
   const setActiveChatId = useChatStore((state) => state.setActiveChatId);
   useEffect(() => {
