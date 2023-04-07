@@ -18,6 +18,10 @@ import { setColorScheme } from "@/stores/ChatActions";
 import ElevenLabsPlayer from "@/components/ElevenLabsPlayer";
 import AzurePlayer from "@/components/AzurePlayer";
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  require('../mocks')
+}
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
