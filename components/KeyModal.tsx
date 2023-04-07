@@ -50,17 +50,9 @@ export function APIPanel({
       const keyValid = await validateKey(apiKey);
 
       if (keyValid) {
-        notifications.show({
-          message: "Key saved!",
-          color: "green",
-        });
         setKeyFun(apiKey);
         setCheckStatus("success");
       } else {
-        notifications.show({
-          message: "Something went wrong",
-          color: "red",
-        });
         setCheckStatus("error");
       }
     }

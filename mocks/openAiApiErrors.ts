@@ -13,13 +13,13 @@ const OpenAiApiErrors: errortype[] = [
   {
     errorString: "e401-1",
     statusCode: 401,
-    errorMessage: "Incorrect API key provided",
+    errorMessage:
+      "Incorrect API key provided: sk-vASQl***************************************xAZS. You can find your API key at https://platform.openai.com/account/api-keys.",
   },
   {
     errorString: "e401-2",
     statusCode: 401,
-    errorMessage:
-      "You must be a member of an organization to use the API",
+    errorMessage: "You must be a member of an organization to use the API",
   },
   {
     errorString: "e429",
@@ -35,8 +35,7 @@ const OpenAiApiErrors: errortype[] = [
   {
     errorString: "e429-2",
     statusCode: 429,
-    errorMessage:
-      "The engine is currently overloaded, please try again later",
+    errorMessage: "The engine is currently overloaded, please try again later",
   },
   {
     errorString: "e500",
@@ -45,4 +44,4 @@ const OpenAiApiErrors: errortype[] = [
   },
 ];
 
-export default OpenAiApiErrors
+export default OpenAiApiErrors;
