@@ -1,7 +1,8 @@
 import { rest } from "msw";
 import modelsJSON from "./models.json";
-import chatCompletionString from "./ChatCompletionMock";
+import { chatCompletionStreamGenerator } from "./chatCompletionGenerator";
 import OpenAiApiErrors from "./openAiApiErrors";
+import { faker } from "@faker-js/faker";
 
 function handleOpenAiApiRequest(
   res,
@@ -51,17 +52,24 @@ export const handlers = [
       res,
       ctx,
       "comp",
-      ctx.body(chatCompletionString)
+      ctx.body(
+        chatCompletionStreamGenerator(
+          faker.lorem.paragraphs(Math.floor(Math.random() * 5))
+        )
+      )
     );
   }),
   rest.post(
     "https://api.openai.com/v1/audio/transcriptions",
     (req, res, ctx) => {
+      console.log("req :>> ");
       return handleOpenAiApiRequest(
         res,
         ctx,
         "whisper",
-        ctx.json({ text: "hello_test" })
+        ctx.json({
+          text: faker.lorem.paragraphs(Math.floor(Math.random() * 5)),
+        })
       );
     }
   ),
