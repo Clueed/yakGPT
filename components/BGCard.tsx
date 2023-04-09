@@ -13,6 +13,7 @@ const useStyles = createStyles((theme) => ({
   card: {
     position: "relative",
     height: rem(280),
+    width: rem(280),
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[6]
@@ -86,14 +87,7 @@ export default function ImageCard({
       onClick={onClick}
     >
       <div className={classes.image}>
-        <Image
-          src={image}
-          fill
-          sizes="(max-width: 768px) 100vw,
-                  (max-width: 1200px) 50vw,
-                  33vw"
-          alt={title}
-        />
+        <Image src={image} fill alt={title} />
       </div>
       <div className={classes.overlay} />
 

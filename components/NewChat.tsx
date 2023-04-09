@@ -1,7 +1,13 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useChatStore } from "@/stores/ChatStore";
-import { Container, rem, useMantineTheme } from "@mantine/core";
+import {
+  Container,
+  useMantineTheme,
+  createStyles,
+  Text,
+  Box,
+  ThemeIcon,
+} from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import {
@@ -194,7 +200,7 @@ Ask me what my idea is.`,
 
 function CardsCarousel({ children }: { children: React.ReactNode }) {
   const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
 
   const slides = React.Children.map(children, (theirChildren, index) => (
     <Carousel.Slide key={index}>{theirChildren}</Carousel.Slide>
@@ -203,25 +209,38 @@ function CardsCarousel({ children }: { children: React.ReactNode }) {
   return (
     <Carousel
       slideSize="30.5%"
-      breakpoints={[{ maxWidth: "sm", slideSize: "100%", slideGap: rem(2) }]}
       slideGap="xl"
-      slidesToScroll={mobile ? 1 : 3}
-      controlsOffset="xs"
+      slidesToScroll={mobile ? 1 : 2}
       nextControlIcon={<IconArrowRight size={16} />}
       previousControlIcon={<IconArrowLeft size={16} />}
-      sx={{ maxWidth: "90vw" }}
+      // hide inactive control
+      styles={{
+        control: {
+          "&[data-inactive]": {
+            opacity: 0,
+            cursor: "default",
+          },
+        },
+      }}
+      align="start"
     >
       {slides}
     </Carousel>
   );
 }
 
+const useStyles = createStyles((theme: MantineTheme) => ({
+  container: {},
+}));
+
 export default function NewChatCarousel() {
   const router = useRouter();
-
+  const { classes, cx } = useStyles();
   return (
-    <Container py="xl">
-      <h2 style={{ textAlign: "center" }}> Choose a prompt...</h2>
+    <Container py="xl" style={{ width: "90%" }}>
+      <Text mb="xl" fw={600} ta="center" size="xl">
+        Choose a prompt...
+      </Text>
       <CardsCarousel>
         {Object.keys(characters).map((key) => {
           // @ts-ignore
@@ -251,18 +270,14 @@ export default function NewChatCarousel() {
           );
         })}
       </CardsCarousel>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        <h2> Or start by simply typing below</h2>
-        <IconArrowDown style={{ marginLeft: "0.5rem" }} />
-      </div>
+      <Box my="xl" ta="center">
+        <Text fw={600} size="xl">
+          or start by simply typing below
+        </Text>
+        <ThemeIcon variant="transparent" mt="md">
+          <IconArrowDown size="1.2rem" color="gray" />
+        </ThemeIcon>
+      </Box>
     </Container>
   );
 }
