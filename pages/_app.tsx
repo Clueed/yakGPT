@@ -18,8 +18,8 @@ import { setColorScheme } from "@/stores/ChatActions";
 import ElevenLabsPlayer from "@/components/ElevenLabsPlayer";
 import AzurePlayer from "@/components/AzurePlayer";
 
-if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  require('../mocks')
+if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+  require("../mocks");
 }
 
 export default function App(props: AppProps) {
@@ -97,6 +97,14 @@ export default function App(props: AppProps) {
                 "#1e212f",
                 "#070b16",
               ],
+            },
+            spacing: {
+              xxs: "0.5625rem",
+              xs: "0.625rem",
+              sm: "0.75rem",
+              md: "1rem",
+              lg: "1.25rem",
+              xl: "1.5rem",
             },
           }}
         >

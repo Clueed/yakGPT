@@ -4,8 +4,8 @@ export interface Chat {
   id: string;
   title?: string | undefined;
   messages: Message[];
+  createdAt: Date;
   chosenCharacter?: string | undefined;
-  createdAt?: Date | undefined;
   tokensUsed?: number;
   costIncurred?: number;
 }

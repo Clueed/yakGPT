@@ -1,47 +1,47 @@
-import React, { useState, MouseEvent } from "react"
-import { IconCheck, IconTrash } from "@tabler/icons-react"
-
+import React, { useState, MouseEvent } from "react";
+import { IconCheck, IconTrash } from "@tabler/icons-react";
+import NavButton from "./NavButton";
+import { clearChats } from "@/stores/ChatActions";
 interface Props {
-  clearHandler: () => void
-  classes: {
-    link: string
-    linkIcon: string
-  }
+  handleOnClick: () => void;
 }
 
-const ClearChatsButton: React.FC<Props> = ({ clearHandler, classes }) => {
-  const [awaitingConfirmation, setAwaitingConfirmation] = useState<boolean>(false)
+const ClearChatsButton: React.FC<Props> = ({ handleOnClick }) => {
+  const [awaitingConfirmation, setAwaitingConfirmation] =
+    useState<boolean>(false);
 
   const clickHandler = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (awaitingConfirmation) {
-      clearHandler()
-      setAwaitingConfirmation(false)
+      handleOnClick();
+      setAwaitingConfirmation(false);
     } else {
-      setAwaitingConfirmation(true)
+      setAwaitingConfirmation(true);
     }
-  }
+  };
 
   const cancelConfirmation = () => {
-    setAwaitingConfirmation(false)
-  }
+    setAwaitingConfirmation(false);
+  };
 
   return (
-    <a href="#" className={classes.link} onClick={clickHandler} onBlur={cancelConfirmation}>
-      {
-        awaitingConfirmation
-          ? <>
-              <IconCheck className={classes.linkIcon} stroke={1.5} />
-              <span>Confirm Clear Chats</span>
-            </>
-          : <>
-              <IconTrash className={classes.linkIcon} stroke={1.5} />
-              <span>Clear Chats</span>
-            </>
-      }
-    </a>
-  )
-}
+    <div onBlur={cancelConfirmation}>
+      {awaitingConfirmation ? (
+        <NavButton
+          Icon={IconCheck}
+          text="Confirm Clear Chats"
+          handleOnClick={clickHandler}
+        />
+      ) : (
+        <NavButton
+          Icon={IconTrash}
+          text="Clear Chats"
+          handleOnClick={clickHandler}
+        />
+      )}
+    </div>
+  );
+};
 
-export default ClearChatsButton
+export default ClearChatsButton;

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Message } from "./Message";
 import { persist } from "zustand/middleware";
-import { Chat } from "./Chat";
+import { Chat } from "@/stores/Chat";
 import { SpeechRecognizer } from "microsoft-cognitiveservices-speech-sdk";
 
 export type APIState = "idle" | "loading" | "error";
@@ -138,6 +138,11 @@ export const initialState = {
   textInputValue: "",
 };
 
+import { generateFakeChats } from "@/mocks/populateFakeChats";
+
+if (process.env.NEXT_PUBLIC_FAKE_INITIAL_CHATS === "enabled") {
+  initialState.chats = generateFakeChats(50);
+}
 const store = () => ({ ...initialState } as ChatState);
 
 export const useChatStore = create<ChatState>()(
