@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { upperFirst, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
+  IconEdit,
   IconKey,
   IconMoon,
   IconPlus,
@@ -26,6 +27,7 @@ import { useRouter } from "next/router";
 import { clearChats, setNavOpened } from "@/stores/ChatActions";
 import NavChatHistory from "./NavChatHistory";
 import NavButton from "./NavButton";
+import { useState } from "react";
 
 const useStyles = createStyles((theme) => ({}));
 
@@ -48,14 +50,17 @@ export default function NavbarSimple() {
 
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
+  const [editChatsHistoryView, setEditChatsHistoryView] = useState(false);
+
   return (
     <Navbar
       height={"100%"}
-      p="xs"
+      p="xxs"
       hiddenBreakpoint="sm"
       hidden={!navOpened}
       width={{ sm: 200, lg: 200 }}
       sx={{ zIndex: 1001 }}
+      withBorder={false}
     >
       <MediaQuery largerThan="sm" styles={{ display: "none" }}>
         <Space h="xl" />
@@ -71,11 +76,11 @@ export default function NavbarSimple() {
         />
       </Navbar.Section>
 
-      <NavChatHistory />
+      <NavChatHistory editChatsHistoryView={editChatsHistoryView} />
 
       <Navbar.Section>
-        <Divider my="xs" />
         {
+          //<Divider my="xs" />
           //links?.length > 0 &&
           <ClearChatsButton
             handleOnClick={() => {
@@ -84,6 +89,13 @@ export default function NavbarSimple() {
             }}
           />
         }
+        <NavButton
+          Icon={IconEdit}
+          text="Edit chat history"
+          handleOnClick={() => {
+            setEditChatsHistoryView(!editChatsHistoryView);
+          }}
+        />
 
         <NavButton
           Icon={DarkModeIcon}
@@ -93,7 +105,12 @@ export default function NavbarSimple() {
           handleOnClick={() => toggleColorScheme()}
         />
 
-        <Modal opened={openedKeyModal} onClose={closeKeyModal} title="API Keys">
+        <Modal
+          opened={openedKeyModal}
+          onClose={closeKeyModal}
+          title="API Keys"
+          zIndex={9999}
+        >
           <KeyModal close={closeKeyModal} />
         </Modal>
 
@@ -101,6 +118,7 @@ export default function NavbarSimple() {
           opened={openedSettingsModal}
           onClose={closeSettingsModal}
           title="Settings"
+          zIndex={9999}
         >
           <SettingsModal close={closeSettingsModal} />
         </Modal>

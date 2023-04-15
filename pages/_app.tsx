@@ -84,21 +84,9 @@ export default function App(props: AppProps) {
                 "#0e1540",
                 "#04061b",
               ],
-              // https://smart-swatch.netlify.app/#2A2D3D
-              dark: [
-                "#eef1fd",
-                "#d1d4e3",
-                "#b3b7cb",
-                "#959ab5",
-                "#787e9f",
-                "#5f6486",
-                "#494e69",
-                "#34384c",
-                "#1e212f",
-                "#070b16",
-              ],
             },
             spacing: {
+              xxxs: "0.21875rem",
               xxs: "0.5625rem",
               xs: "0.625rem",
               sm: "0.75rem",
@@ -115,14 +103,6 @@ export default function App(props: AppProps) {
             layout="alt"
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
-            styles={(theme) => ({
-              main: {
-                backgroundColor:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-              },
-            })}
           >
             <div style={{ position: "relative", height: "100%" }}>
               <Component {...pageProps} />

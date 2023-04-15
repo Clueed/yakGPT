@@ -11,19 +11,6 @@ import {
 } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  header: {
-    //paddingBottom: theme.spacing.md,
-    //marginBottom: `calc(${theme.spacing.md})`,
-  },
-
-  footer: {
-    paddingTop: theme.spacing.md,
-    marginTop: theme.spacing.md,
-    borderTop: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
-    }`,
-  },
-
   linkIcon: {
     ref: getStylesRef("icon"),
     color:
@@ -31,6 +18,12 @@ const useStyles = createStyles((theme) => ({
         ? theme.colors.dark[2]
         : theme.colors.gray[6],
     marginRight: theme.spacing.sm,
+    height: "20px",
+    width: "20px",
+    [theme.fn.smallerThan("sm")]: {
+      height: "25px",
+      width: "25px",
+    },
   },
 
   link: {
@@ -39,15 +32,16 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     textDecoration: "none",
     fontSize: theme.fontSizes.sm,
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: theme.fontSizes.md,
+    },
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[1]
         : theme.colors.gray[7],
-    padding: `${theme.spacing.xs} ${theme.spacing.xs}`,
+    padding: `${theme.spacing.xs}`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
-    // im a noob
-    flexGrow: "1 !important",
 
     "&:hover": {
       backgroundColor:

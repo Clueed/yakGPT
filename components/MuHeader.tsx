@@ -105,7 +105,7 @@ export default function MuHeader({ children }: any) {
   const modelInfo = getModelInfo(activeModel);
 
   return (
-    <Header height={36} mb={120} sx={{ zIndex: 1002 }}>
+    <Header height={36} mb={120} sx={{ zIndex: 1002 }} withBorder={false}>
       <Container className={classes.inner}>
         <MediaQuery largerThan="sm" styles={{ display: "none", width: 0 }}>
           <Burger
