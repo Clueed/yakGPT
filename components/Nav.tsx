@@ -29,6 +29,7 @@ import { clearChats, setNavOpened } from "@/stores/ChatActions";
 import NavChatHistory from "./NavChatHistory";
 import NavButton from "./NavButton";
 import { useState } from "react";
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   secondaryButton: {
@@ -87,21 +88,16 @@ export default function NavbarSimple() {
         <Space h="xl" />
       </MediaQuery>
       <Navbar.Section>
-        <Button
-          variant="light"
-          onClick={(event) => {
-            event.preventDefault();
-            router.push("/");
-          }}
-          fullWidth
-          mb={"md"}
-          leftIcon={<IconPlus />}
-        >
-          New Chat
-        </Button>
+        <Link href={"/"} passHref style={{ textDecoration: "none" }}>
+          <Button variant="light" fullWidth leftIcon={<IconPlus />}>
+            New Chat
+          </Button>
+        </Link>
       </Navbar.Section>
 
-      <NavChatHistory />
+      <Navbar.Section grow sx={{ overflow: "hidden" }}>
+        <NavChatHistory />
+      </Navbar.Section>
 
       <Navbar.Section>
         <Button

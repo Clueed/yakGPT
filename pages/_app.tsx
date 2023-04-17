@@ -1,4 +1,4 @@
-import { AppProps } from "next/app";
+import { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
 import {
   AppShell,
@@ -20,6 +20,10 @@ import AzurePlayer from "@/components/AzurePlayer";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   require("../mocks");
+}
+
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  console.log(metric);
 }
 
 export default function App(props: AppProps) {
