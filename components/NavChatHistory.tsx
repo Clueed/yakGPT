@@ -23,7 +23,7 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconArrowRight, IconEdit, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-
+import { clearChats } from "@/stores/ChatActions";
 const useStyles = createStyles((theme) => ({
   groupLabel: {
     fontWeight: 500,
@@ -105,7 +105,11 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  scrollbar: {
+  chatHistoryContainer: {
+    overflowX: "hidden",
+    overflowY: "scroll",
+    height: "100%",
+
     scrollbarWidth: "thin",
     scrollbarColor: "transparent transparent",
 
@@ -125,6 +129,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 import { Chat } from "@/stores/Chat";
+import ClearChatsButton from "./ClearChatsButton";
 
 type ChatGroupBase = {
   deltaDays: number;
@@ -159,7 +164,7 @@ function groupChatsByDate(chats: Chat[], dateGroups: ChatGroupBase[]) {
   return chatDateGroups.filter((group) => group.chats.length > 0);
 }
 
-export default function NavChatHistory({ editChatsHistoryView }) {
+export default function NavChatHistory() {
   const { classes, cx, theme } = useStyles();
   const router = useRouter();
   const [editedTitle, setEditedTitle] = useState("");
@@ -187,167 +192,196 @@ export default function NavChatHistory({ editChatsHistoryView }) {
 
   const groupedChats = groupChatsByDate(chats, dateGroups);
 
+  const [editChatsHistoryView, setEditChatsHistoryView] = useState(false);
+
   return (
     <>
-      <Navbar.Section
-        grow
-        className={classes.scrollbar}
-        style={{
-          overflowX: "hidden",
-          overflowY: "scroll",
-        }}
-        sx={{
-          maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
-          minWidth: 0,
-          //lineHeight: "1",
-          //backgroundClip: "text",
-        }}
-      >
-        <Flex
-          direction="column"
-          wrap="nowrap"
-          style={{ minWidth: "0 !important" }}
+      <Navbar.Section grow className={classes.chatHistoryContainer}>
+        <Box
+          className={classes.chatHistoryContainer}
+          sx={{
+            maskImage:
+              "linear-gradient(to bottom, black 80%, transparent 100%)",
+          }}
         >
-          {groupedChats.map((group) => (
-            <div key={group.deltaDays}>
-              {editChatsHistoryView && group.label === groupedChats[0].label ? (
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  p="xxs"
-                  style={{ position: "relative" }}
-                >
-                  <Text className={classes.groupLabel}>{group.label}</Text>
-                  <Button
-                    pl={"auto"}
-                    compact={!isSmall}
-                    variant="light"
-                    size={isSmall ? "md" : "xs"}
-                    color={"dark.3"}
-                    rightIcon={<IconTrash size={isSmall ? 20 : 15} />}
-                  >
-                    Clear all chats
-                  </Button>
-                </Flex>
-              ) : (
+          <Flex
+            direction="column"
+            wrap="nowrap"
+            style={{ minWidth: "0 !important" }}
+          >
+            {groupedChats.map((group) => (
+              <div key={group.deltaDays}>
                 <Text className={classes.groupLabel}>{group.label}</Text>
-              )}
-              <Flex
-                direction={"column"}
-                style={{ minWidth: "0 !important", overflow: "hidden" }}
-              >
-                {group.chats.map((chat) => (
-                  <a
-                    href="#"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      router.push(`/chat/${chat.id}`);
-                      if (isSmall) {
-                        setNavOpened(false);
-                      }
-                    }}
-                    style={{
-                      textDecoration: "none",
-                      cursor: "pointer",
-                      flexShrink: 1,
-                      minWidth: 0,
-                      flexGrow: 1,
-                    }}
-                  >
-                    <Flex
-                      key={chat.id}
-                      direction="row"
-                      wrap="nowrap"
-                      //gap={"xxs"}
-                      //w={"100%"}
-                      style={{
-                        minWidth: "0 !important",
-                        overflow: "hidden",
-                        width: "100%",
-                        justifyContent: "space-between",
+
+                <Flex
+                  direction={"column"}
+                  style={{ minWidth: "0 !important", overflow: "hidden" }}
+                >
+                  {group.chats.map((chat) => (
+                    <a
+                      href="#"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        router.push(`/chat/${chat.id}`);
+                        if (isSmall) {
+                          setNavOpened(false);
+                        }
                       }}
-                      align={"center"}
-                      className={
-                        chat.id === activeChatId ? classes.linkActive : ""
-                      }
+                      style={{
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        flexShrink: 1,
+                        minWidth: 0,
+                        flexGrow: 1,
+                      }}
                     >
-                      <Text
-                        className={classes.chatLinkText}
-                        weight={500}
+                      <Flex
+                        key={chat.id}
+                        direction="row"
+                        wrap="nowrap"
+                        //gap={"xxs"}
+                        //w={"100%"}
                         style={{
-                          minWidth: 0,
-                          textOverflow: `clip`,
+                          minWidth: "0 !important",
                           overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          flexGrow: 1,
-                          //lineHeight: "1",
+                          width: "100%",
+                          justifyContent: "space-between",
                         }}
-                        sx={{
-                          minWidth: 0,
-                          //lineHeight: "1",
-                          //backgroundClip: "text",
-                          maskImage:
-                            "linear-gradient(to right, black 95%, transparent 100%)",
-                        }}
+                        align={"center"}
+                        className={
+                          chat.id === activeChatId ? classes.linkActive : ""
+                        }
                       >
-                        {chat.title || "Untitled"}
-                      </Text>
+                        <Text
+                          className={classes.chatLinkText}
+                          weight={500}
+                          style={{
+                            minWidth: 0,
+                            textOverflow: `clip`,
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            flexGrow: 1,
+                            //lineHeight: "1",
+                          }}
+                          sx={{
+                            minWidth: 0,
+                            //lineHeight: "1",
+                            //backgroundClip: "text",
+                            maskImage:
+                              "linear-gradient(to right, black 95%, transparent 100%)",
+                          }}
+                        >
+                          {chat.title || "Untitled"}
+                        </Text>
 
-                      {editChatsHistoryView && (
-                        <Flex align="center" gap={rem(5)} mr={"xxs"}>
-                          <Tooltip label="Edit" withArrow position="right">
-                            <a
-                              href="#"
-                              onClick={(event) => {
-                                event.preventDefault();
-                                openTitleModal();
+                        {editChatsHistoryView && (
+                          <Flex align="center" gap={rem(5)} mr={"xxs"}>
+                            <Tooltip label="Edit" withArrow position="right">
+                              <a
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  openTitleModal();
 
-                                setEditedTitle(chat.title!);
-                                setTimeout(() => {
-                                  editTitleInputRef.current?.select();
-                                }, 100);
-                              }}
-                            >
-                              <ActionIcon
-                                variant="transparent"
-                                size={isSmall ? 40 : 20}
+                                  setEditedTitle(chat.title!);
+                                  setTimeout(() => {
+                                    editTitleInputRef.current?.select();
+                                  }, 100);
+                                }}
                               >
-                                <IconEdit
-                                  stroke={1.5}
-                                  color={theme.colors.dark[2]}
-                                />
-                              </ActionIcon>
-                            </a>
-                          </Tooltip>
-                          <Tooltip label="Delete" withArrow position="right">
-                            <a
-                              href="#"
-                              onClick={(event) => {
-                                event.preventDefault();
-                                deleteChat(chat.id);
-                                router.push("/");
-                              }}
-                            >
-                              <ActionIcon
-                                variant="transparent"
-                                size={isSmall ? 40 : 20}
+                                <ActionIcon
+                                  variant="transparent"
+                                  size={isSmall ? 40 : 20}
+                                >
+                                  <IconEdit
+                                    stroke={1.5}
+                                    color={theme.colors.dark[2]}
+                                  />
+                                </ActionIcon>
+                              </a>
+                            </Tooltip>
+                            <Tooltip label="Delete" withArrow position="right">
+                              <a
+                                href="#"
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  deleteChat(chat.id);
+                                  router.push("/");
+                                }}
                               >
-                                <IconTrash
-                                  stroke={1.5}
-                                  color={theme.colors.dark[2]}
-                                />
-                              </ActionIcon>
-                            </a>
-                          </Tooltip>
-                        </Flex>
-                      )}
-                    </Flex>
-                  </a>
-                ))}
-              </Flex>
-            </div>
-          ))}
-        </Flex>
+                                <ActionIcon
+                                  variant="transparent"
+                                  size={isSmall ? 40 : 20}
+                                >
+                                  <IconTrash
+                                    stroke={1.5}
+                                    color={theme.colors.dark[2]}
+                                  />
+                                </ActionIcon>
+                              </a>
+                            </Tooltip>
+                          </Flex>
+                        )}
+                      </Flex>
+                    </a>
+                  ))}
+                </Flex>
+              </div>
+            ))}
+          </Flex>
+        </Box>
+        {
+          //<Divider my="xs" />
+          //links?.length > 0 &&
+        }
+        <div
+          style={{ position: "relative", top: 0, zIndex: 9999, width: "100%" }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              bottom: editChatsHistoryView ? 10 : 20,
+              zIndex: 9999,
+              width: "100%",
+            }}
+          >
+            <Button.Group orientation="vertical">
+              <Button
+                variant="filled"
+                color="gray.3"
+                compact
+                fullWidth
+                size={editChatsHistoryView ? "sm" : "xs"}
+                onClick={() => setEditChatsHistoryView(!editChatsHistoryView)}
+                leftIcon={<IconEdit size={15} />}
+                sx={{ transition: "all 0.1s " }}
+              >
+                Edit chat history
+              </Button>
+              {editChatsHistoryView && (
+                <Button
+                  variant="filled"
+                  color="gray.3"
+                  compact
+                  fullWidth
+                  size="xs"
+                  onClick={() => setEditChatsHistoryView(!editChatsHistoryView)}
+                  leftIcon={<IconTrash size={15} />}
+                >
+                  Clear all chats
+                </Button>
+              )}
+              {
+                // <ClearChatsButton
+                //  handleOnClick={() => {
+                //    clearChats();
+                //    router.push("/");
+                //  }}
+                ///>
+              }
+            </Button.Group>
+          </div>
+        </div>
       </Navbar.Section>
       <Modal
         opened={openedTitleModal}

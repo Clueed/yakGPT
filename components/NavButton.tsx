@@ -1,6 +1,7 @@
 import React, { useState, MouseEvent } from "react";
 import {
   Burger,
+  Button,
   MediaQuery,
   Modal,
   Navbar,

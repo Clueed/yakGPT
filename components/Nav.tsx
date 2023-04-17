@@ -1,6 +1,7 @@
 import { useChatStore } from "@/stores/ChatStore";
 import {
   Burger,
+  Button,
   Divider,
   MediaQuery,
   Modal,
@@ -29,7 +30,29 @@ import NavChatHistory from "./NavChatHistory";
 import NavButton from "./NavButton";
 import { useState } from "react";
 
-const useStyles = createStyles((theme) => ({}));
+const useStyles = createStyles((theme) => ({
+  secondaryButton: {
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : theme.colors.gray[6],
+
+    fontWeight: 500,
+
+    [":hover"]: {
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[0]
+          : theme.colors.gray[7],
+    },
+  },
+
+  secondaryButtonIcon: {
+    strokeWidth: 1.5,
+    width: 20,
+    height: 20,
+  },
+}));
 
 export default function NavbarSimple() {
   const { classes, cx, theme } = useStyles();
@@ -50,8 +73,6 @@ export default function NavbarSimple() {
 
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
-  const [editChatsHistoryView, setEditChatsHistoryView] = useState(false);
-
   return (
     <Navbar
       height={"100%"}
@@ -66,44 +87,32 @@ export default function NavbarSimple() {
         <Space h="xl" />
       </MediaQuery>
       <Navbar.Section>
-        <NavButton
-          Icon={IconPlus}
-          text="New Chat"
-          handleOnClick={(event) => {
+        <Button
+          variant="light"
+          onClick={(event) => {
             event.preventDefault();
             router.push("/");
           }}
-        />
+          fullWidth
+          mb={"md"}
+          leftIcon={<IconPlus />}
+        >
+          New Chat
+        </Button>
       </Navbar.Section>
 
-      <NavChatHistory editChatsHistoryView={editChatsHistoryView} />
+      <NavChatHistory />
 
       <Navbar.Section>
-        {
-          //<Divider my="xs" />
-          //links?.length > 0 &&
-          <ClearChatsButton
-            handleOnClick={() => {
-              clearChats();
-              router.push("/");
-            }}
-          />
-        }
-        <NavButton
-          Icon={IconEdit}
-          text="Edit chat history"
-          handleOnClick={() => {
-            setEditChatsHistoryView(!editChatsHistoryView);
-          }}
-        />
-
-        <NavButton
-          Icon={DarkModeIcon}
-          text={
-            upperFirst(colorScheme === "light" ? "dark" : "light") + " theme"
-          }
-          handleOnClick={() => toggleColorScheme()}
-        />
+        <Button
+          variant="subtle"
+          compact
+          className={classes.secondaryButton}
+          onClick={() => toggleColorScheme()}
+          leftIcon={<DarkModeIcon className={classes.secondaryButtonIcon} />}
+        >
+          {upperFirst(colorScheme === "light" ? "dark" : "light")} theme
+        </Button>
 
         <Modal
           opened={openedKeyModal}
@@ -123,27 +132,34 @@ export default function NavbarSimple() {
           <SettingsModal close={closeSettingsModal} />
         </Modal>
 
-        <NavButton
-          Icon={IconKey}
-          text="API Keys"
-          handleOnClick={(event) => {
-            event.preventDefault();
+        <Button
+          variant="subtle"
+          compact
+          className={classes.secondaryButton}
+          onClick={() => {
             openedSettingsModal && closeSettingsModal();
             openKeyModal();
             if (isSmall) setNavOpened(false);
           }}
-        />
-        <NavButton
-          Icon={IconSettings}
-          text="Settings"
-          handleOnClick={(event) => {
-            event.preventDefault();
+          leftIcon={<IconKey className={classes.secondaryButtonIcon} />}
+        >
+          API Keys
+        </Button>
+
+        <Button
+          variant="subtle"
+          compact
+          className={classes.secondaryButton}
+          onClick={() => {
             openedKeyModal && closeKeyModal();
             openSettingsModal();
 
             if (isSmall) setNavOpened(false);
           }}
-        />
+          leftIcon={<IconSettings className={classes.secondaryButtonIcon} />}
+        >
+          Settings
+        </Button>
       </Navbar.Section>
     </Navbar>
   );
