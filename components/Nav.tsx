@@ -95,7 +95,7 @@ export default function NavbarSimple() {
         </Link>
       </Navbar.Section>
 
-      <Navbar.Section grow sx={{ overflow: "hidden" }}>
+      <Navbar.Section grow sx={{ overflowY: "hidden" }}>
         <NavChatHistory />
       </Navbar.Section>
 
@@ -107,7 +107,7 @@ export default function NavbarSimple() {
           onClick={() => toggleColorScheme()}
           leftIcon={<DarkModeIcon className={classes.secondaryButtonIcon} />}
         >
-          {upperFirst(colorScheme === "light" ? "dark" : "light")} theme
+          {colorScheme === "light" ? "Dark" : "Light"} theme
         </Button>
 
         <Modal

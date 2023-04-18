@@ -1,109 +1,43 @@
-import { deleteChat, setNavOpened, updateChat } from "@/stores/ChatActions";
+import { Chat } from "@/stores/Chat";
+import {
+  clearChats,
+  deleteChat,
+  setNavOpened,
+  updateChat,
+} from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
 import {
   ActionIcon,
   Box,
   Button,
   Flex,
-  Group,
   Modal,
-  Navbar,
   Text,
   TextInput,
-  Title,
   Tooltip,
-  UnstyledButton,
   createStyles,
   getStylesRef,
   px,
-  rem,
-  useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
   IconArrowRight,
   IconCheck,
   IconEdit,
+  IconEditOff,
   IconPencil,
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
+import { unset } from "lodash";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
-import { clearChats } from "@/stores/ChatActions";
+import { useEffect, useRef, useState } from "react";
+
 const useStyles = createStyles((theme) => ({
-  groupLabel: {
-    fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[5],
-    padding: theme.spacing.xxs,
-    paddingTop: theme.spacing.md,
-    paddingBottom: theme.spacing.xxs,
-  },
-
-  chatLinkText: {
-    ref: getStylesRef("chatLinkText"),
-    fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[2]
-        : theme.colors.gray[6],
-    lineHeight: "15px",
-  },
-
-  link: {
-    ...theme.fn.focusStyles(),
-    //width: "100%",
-    //display: "flex",
-    alignItems: "center",
-    padding: `${theme.spacing.xxs + " " + "0"}`,
-    borderRadius: theme.radius.sm,
-
-    //flexGrow: 1,
-
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-      color: theme.colorScheme === "dark" ? theme.white : theme.black,
-
-      [`& .${getStylesRef("icon")}`]: {
-        color: theme.colorScheme === "dark" ? theme.white : theme.black,
-      },
-    },
-  },
-
-  linkIcon: {
-    ref: getStylesRef("icon"),
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[2]
-        : theme.colors.gray[6],
-    //marginRight: theme.spacing.sm,
-  },
-
-  linkActive: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[5]
-        : theme.colors.gray[1],
-    borderRadius: theme.radius.sm,
-    [`& > .${getStylesRef("chatLinkText")}`]: {
-      color:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[1]
-          : theme.colors.gray[9],
-    },
-  },
-
   chatHistoryContainer: {
-    overflowX: "hidden",
     overflowY: "scroll",
+    overflowX: "visible",
     maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
     height: "100%",
 
@@ -123,11 +57,84 @@ const useStyles = createStyles((theme) => ({
       borderRadius: "20px",
     },
   },
-}));
 
-import { Chat } from "@/stores/Chat";
-import ClearChatsButton from "./ClearChatsButton";
-import Link from "next/link";
+  groupLabel: {
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : theme.colors.gray[5],
+    padding: theme.spacing.xxs,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.xxs,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: theme.fontSizes.xl,
+      padding: theme.spacing.md,
+      paddingTop: theme.spacing.xl,
+      paddingBottom: theme.spacing.xxs,
+    },
+  },
+
+  link: {
+    alignItems: "center",
+    flexGap: theme.spacing.xxs,
+    flexWrap: "nowrap",
+    flexDirection: "row",
+
+    padding: theme.spacing.xxs,
+    borderRadius: theme.radius.sm,
+
+    [`&:hover:not(.${getStylesRef("linkActive")})`]: {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+      color: theme.colorScheme === "dark" ? theme.white : theme.black,
+    },
+
+    [theme.fn.smallerThan("sm")]: {
+      padding: theme.spacing.md,
+    },
+  },
+
+  linkActive: {
+    ref: getStylesRef("linkActive"),
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[5]
+        : theme.colors.gray[1],
+    [`& > .${getStylesRef("chatLinkText")}`]: {
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[1]
+          : theme.colors.gray[8],
+      fontWeight: 600,
+    },
+  },
+
+  chatLinkText: {
+    ref: getStylesRef("chatLinkText"),
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[2]
+        : theme.colors.gray[6],
+    lineHeight: "15px", // depends on icons
+    maskImage: "linear-gradient(to right, black 90%, transparent 100%)",
+    textOverflow: `clip`,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    flexGrow: 1,
+
+    [theme.fn.smallerThan("sm")]: {
+      fontSize: theme.fontSizes.xl,
+      lineHeight: "40px", // depends on icons
+    },
+  },
+}));
 
 type ChatGroupBase = {
   deltaDays: number;
@@ -138,6 +145,13 @@ type ChatGroup = ChatGroupBase & {
   chats: Chat[];
 };
 
+/**
+ * Groups an array of chats by date, based on a given set of date groups.
+ *
+ * @param {Chat[]} chats - The array of chats to group.
+ * @param {ChatGroupBase[]} dateGroups - The array of date groups to use.
+ * @return {ChatGroup[]} An array of chat groups, each containing an array of chats.
+ */
 function groupChatsByDate(chats: Chat[], dateGroups: ChatGroupBase[]) {
   const sortedChats = [...chats].sort(
     (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
@@ -168,7 +182,7 @@ function groupChatsByDate(chats: Chat[], dateGroups: ChatGroupBase[]) {
 
 export default function NavChatHistory() {
   const { classes, cx, theme } = useStyles();
-  const router = useRouter();
+
   const [editedTitle, setEditedTitle] = useState("");
   const [openedTitleModal, { open: openTitleModal, close: closeTitleModal }] =
     useDisclosure(false);
@@ -179,10 +193,17 @@ export default function NavChatHistory() {
     closeTitleModal();
   };
   const editTitleInputRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
   const activeChatId = router.query.chatId as string | undefined;
+
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const chats = useChatStore((state) => state.chats);
+
+  if (chats.length === 0) {
+    return null;
+  }
 
   const dateGroups: ChatGroupBase[] = [
     { deltaDays: 0, label: "Today" },
@@ -191,34 +212,38 @@ export default function NavChatHistory() {
     { deltaDays: 30, label: "Last month" },
     { deltaDays: 365, label: "Last year" },
   ];
-
   const groupedChats = groupChatsByDate(chats, dateGroups);
 
   const [editChatsHistoryView, setEditChatsHistoryView] = useState(false);
+  const [clearChatsConfirmed, setClearChatsConfirmed] =
+    useState<boolean>(false);
+
+  function handleClearChats() {
+    if (clearChatsConfirmed) {
+      clearChats();
+      router.push("/");
+      setClearChatsConfirmed(false);
+    } else {
+      setClearChatsConfirmed(true);
+    }
+  }
+
+  useEffect(() => {
+    setClearChatsConfirmed(false);
+  }, [editChatsHistoryView]);
 
   return (
-    <Flex direction={"column"} sx={{ minHeight: 0, height: "100%" }} py={"xs"}>
+    <Flex direction={"column"} sx={{ height: "100%" }} py={"xs"}>
       <Box className={classes.chatHistoryContainer}>
-        <Flex
-          direction="column"
-          wrap="nowrap"
-          style={{ minWidth: "0 !important" }}
-        >
+        <Flex direction="column" wrap="nowrap">
           {groupedChats.map((group) => (
             <div key={group.deltaDays}>
               <Text className={classes.groupLabel}>{group.label}</Text>
 
-              <Flex
-                direction={"column"}
-                gap={"3px"}
-                style={{
-                  minWidth: "0 !important",
-                  overflow: "hidden",
-                  transition: "all 1s",
-                }}
-              >
+              <Flex direction={"column"} gap={"3px"}>
                 {group.chats.map((chat) => (
                   <Link
+                    key={chat.id}
                     href={`/chat/${chat.id}`}
                     onClick={() => {
                       if (isSmall) {
@@ -227,27 +252,10 @@ export default function NavChatHistory() {
                     }}
                     style={{
                       textDecoration: "none",
-                      cursor: "pointer",
-                      flexShrink: 1,
-                      minWidth: 0,
-                      flexGrow: 1,
                     }}
                   >
                     <Flex
                       key={chat.id}
-                      direction="row"
-                      wrap="nowrap"
-                      gap={"xxs"}
-                      //w={"100%"}
-                      style={{
-                        transition: "all 0.5s",
-                        minWidth: "0 !important",
-                        overflow: "hidden",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                      px={"xxs"}
-                      align={"center"}
                       className={cx(
                         classes.link,
                         chat.id === activeChatId ? classes.linkActive : ""
@@ -256,6 +264,8 @@ export default function NavChatHistory() {
                       {editChatsHistoryView && (
                         <ActionIcon
                           variant="subtle"
+                          pt={2}
+                          mr={5}
                           size={isSmall ? 40 : 15}
                           onClick={(event) => {
                             event.preventDefault();
@@ -265,28 +275,18 @@ export default function NavChatHistory() {
                             }
                           }}
                         >
-                          <IconX stroke={1.5} color={theme.colors.red[3]} />
+                          <IconX
+                            stroke={1.5}
+                            color={
+                              theme.colorScheme === "dark"
+                                ? theme.colors.red[3]
+                                : theme.colors.red[8]
+                            }
+                          />
                         </ActionIcon>
                       )}
-                      <Text
-                        className={classes.chatLinkText}
-                        weight={500}
-                        style={{
-                          minWidth: 0,
-                          textOverflow: `clip`,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          flexGrow: 1,
-                          //lineHeight: "1",
-                        }}
-                        sx={{
-                          minWidth: 0,
-                          //lineHeight: "1",
-                          //backgroundClip: "text",
-                          maskImage:
-                            "linear-gradient(to right, black 95%, transparent 100%)",
-                        }}
-                      >
+
+                      <Text className={classes.chatLinkText}>
                         {chat.title || "Untitled"}
                       </Text>
 
@@ -318,56 +318,83 @@ export default function NavChatHistory() {
           ))}
         </Flex>
       </Box>
-      {
-        //<Divider my="xs" />
-        //links?.length > 0 &&
-      }
 
       <Button.Group px="3px">
         {editChatsHistoryView && (
-          <Tooltip label={"Clear chat history"} withArrow color="red.4">
+          <Tooltip
+            label={
+              clearChatsConfirmed
+                ? "Confirm deleting all chats"
+                : "Clear chat history"
+            }
+            withArrow
+            color="red.4"
+            sx={{
+              color: theme.colors.gray[9],
+              fontWeight: 500,
+            }}
+          >
             <ActionIcon
               variant="filled"
-              color="red.5"
+              color={theme.colorScheme === "dark" ? "red.5" : "red.3"}
+              radius="md"
               sx={{
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
+                borderTopLeftRadius: 0,
                 height: "auto",
-                minHeight: 0,
-                padding: "auto",
+                paddingLeft: isSmall ? theme.spacing.md : 0,
+                paddingRight: isSmall ? theme.spacing.md : 0,
+                width: "auto",
               }}
-              onClick={() => setEditChatsHistoryView(!editChatsHistoryView)}
+              onClick={() => {
+                handleClearChats();
+              }}
             >
-              <IconTrash size={15} color={theme.colors.gray[8]} />
+              {clearChatsConfirmed ? (
+                <IconCheck
+                  size={isSmall ? 30 : 15}
+                  color={theme.colors.gray[8]}
+                />
+              ) : (
+                <IconTrash
+                  size={isSmall ? 30 : 15}
+                  color={theme.colors.gray[8]}
+                />
+              )}
             </ActionIcon>
           </Tooltip>
         )}
         <Button
           variant={editChatsHistoryView ? "filled" : "light"}
-          color={editChatsHistoryView ? "gray.8" : "gray.6"}
-          compact
+          color={
+            editChatsHistoryView
+              ? theme.colorScheme === "dark"
+                ? "gray.8"
+                : "gray.5"
+              : theme.colorScheme === "dark"
+              ? "gray.5"
+              : "gray.6"
+          }
+          compact={!isSmall}
           fullWidth
+          size={isSmall ? "md" : "md"}
+          radius="md"
           onClick={() => setEditChatsHistoryView(!editChatsHistoryView)}
+          sx={{
+            borderTopRightRadius: 0,
+            borderTopLeftRadius: editChatsHistoryView ? "md" : 0,
+          }}
           leftIcon={
             editChatsHistoryView ? (
-              <IconCheck size={15} />
+              <IconEditOff size={isSmall ? 25 : 15} />
             ) : (
-              <IconEdit size={15} />
+              <IconEdit size={isSmall ? 25 : 15} />
             )
           }
-          sx={{ transition: "all 0.1s" }}
         >
           {editChatsHistoryView ? "Done editing" : "Edit chat history"}
         </Button>
-
-        {
-          // <ClearChatsButton
-          //  handleOnClick={() => {
-          //    clearChats();
-          //    router.push("/");
-          //  }}
-          ///>
-        }
       </Button.Group>
       <Modal
         opened={openedTitleModal}
