@@ -95,7 +95,7 @@ export default function NavbarSimple() {
         </Link>
       </Navbar.Section>
 
-      <Navbar.Section grow sx={{ overflowY: "hidden" }}>
+      <Navbar.Section grow my="md" sx={{ overflowY: "hidden" }}>
         <NavChatHistory />
       </Navbar.Section>
 
