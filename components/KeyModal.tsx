@@ -74,8 +74,6 @@ export function APIPanel({
     setApiKey(event.target.value);
   };
 
-  const theme = useMantineTheme();
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (apiKey) {
@@ -118,6 +116,8 @@ export function APIPanel({
     chat: { icon: IconMessage, description: "Chat" },
   };
 
+  const theme = useMantineTheme();
+
   return (
     <form onSubmit={handleSubmit}>
       <Flex direction={"row"} gap={"sm"}>
@@ -128,7 +128,7 @@ export function APIPanel({
               size="md"
               p="sm"
               variant="filled"
-              color="gray.6"
+              color="primary.3"
               leftSection={
                 <Box pt={4}>
                   <Icon size={15} stroke={1.6} />
@@ -141,14 +141,7 @@ export function APIPanel({
         })}
       </Flex>
       <PasswordInput
-        label={
-          <>
-            API Key{" "}
-            <a href="">
-              <IconLink size={15} style={{ width: "auto", height: "auto" }} />
-            </a>
-          </>
-        }
+        label={"API Key"}
         placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         icon={icon}
         value={apiKey}
@@ -162,14 +155,17 @@ export function APIPanel({
           onChange={(event) => setRegion(event.target.value)}
         />
       )}
-      {descriptionBelowInput}
+      <Text size="sm" my="md" color="gray.6">
+        {descriptionBelowInput}
+      </Text>
       <Flex align={"center"} gap={"xs"}>
         <IconAlertSquareRounded
           size={55}
           style={{ margin: 0, padding: 0, width: "auto", height: "auto" }}
-          stroke={0.9}
+          stroke={1}
+          color={theme.colors.gray[8]}
         />
-        <Text size={"xs"}>
+        <Text size={"xs"} color={theme.colors.gray[8]}>
           Your API keys are stored locally and are not sent to any third-party
           or intermediate servers.
         </Text>
@@ -227,8 +223,8 @@ export default function KeyModal({ close }: { close: () => void }) {
             setKeyFun={setApiKeyOpenAI}
             usage={["chat", "STT"]}
             descriptionBelowInput={
-              <p>
-                → Get your API key from the{" "}
+              <>
+                Get your API key from the {""}
                 <a
                   target="_blank"
                   href="https://platform.openai.com/account/api-keys"
@@ -236,7 +232,7 @@ export default function KeyModal({ close }: { close: () => void }) {
                   OpenAI dashboard
                 </a>
                 .
-              </p>
+              </>
             }
             validateKey={testKeyOpenAI}
             closeModal={close}
