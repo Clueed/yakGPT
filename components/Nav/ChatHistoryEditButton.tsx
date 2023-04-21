@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Tooltip, createStyles } from "@mantine/core";
+import { ActionIcon, Button, Flex, Tooltip, createStyles } from "@mantine/core";
 import {
   IconCheck,
   IconEdit,
@@ -35,7 +35,7 @@ export default function ChatHistoryEditButton({ editMode, setEditMode }) {
   }, [editMode]);
 
   return (
-    <>
+    <Flex wrap={"nowrap"} direction={"row"}>
       {editMode && (
         <Tooltip
           label={
@@ -104,6 +104,6 @@ export default function ChatHistoryEditButton({ editMode, setEditMode }) {
       >
         {editMode ? "Done editing" : "Edit chat history"}
       </Button>
-    </>
+    </Flex>
   );
 }
