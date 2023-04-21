@@ -8,6 +8,11 @@ import {
   px,
   PasswordInput,
   TextInput,
+  Title,
+  Flex,
+  Badge,
+  useMantineTheme,
+  Text,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -17,13 +22,23 @@ import { testKey as testKeyAzure } from "@/stores/AzureSDK";
 
 import { useChatStore } from "@/stores/ChatStore";
 import {
+  IconAlertSquare,
+  IconAlertSquareRounded,
+  IconBrandOpenai,
   IconBrandWindows,
+  IconChartBubble,
   IconCheck,
+  IconLink,
+  IconMessage,
+  IconMicrophone,
   IconRobot,
+  IconSpeakerphone,
   IconVolume,
   IconX,
 } from "@tabler/icons-react";
 import { update } from "@/stores/ChatActions";
+
+type Usage = "TTS" | "STT" | "chat";
 
 export function APIPanel({
   name,
@@ -33,6 +48,7 @@ export function APIPanel({
   setKeyFunRegion,
   descriptionAboveInput,
   descriptionBelowInput,
+  usage,
   validateKey,
   closeModal,
 }: {
@@ -43,6 +59,7 @@ export function APIPanel({
   setKeyFunRegion?: (key: string) => void;
   descriptionAboveInput: string;
   descriptionBelowInput: React.ReactNode;
+  usage: Usage[];
   validateKey: (key: string, region?: string) => Promise<boolean>;
   closeModal: () => void;
 }) {
@@ -92,40 +109,74 @@ export function APIPanel({
   };
   const icon = iconMap[checkStatus];
   console.log(apiKey);
+
+  const usageMap = {
+    STT: { icon: IconMicrophone, description: "Speech-to-text" },
+    TTS: { icon: IconVolume, description: "Text-to-speech" },
+    chat: { icon: IconMessage, description: "Chat" },
+  };
+
+  const theme = useMantineTheme();
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h2>🔑 {name}:</h2>
-        <p>{descriptionAboveInput}</p>
-        <PasswordInput
-          label="API Key"
-          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          icon={icon}
-          value={apiKey}
-          onChange={handleKeyChange}
+    <form onSubmit={handleSubmit}>
+      <Flex direction={"row"} gap={"sm"}>
+        {usage.map((u) => {
+          const Icon = usageMap[u].icon;
+          return (
+            <Badge
+              size="md"
+              p="sm"
+              variant="filled"
+              color="primary.3"
+              leftSection={
+                <Box pt={4}>
+                  <Icon size={15} stroke={1.6} />
+                </Box>
+              }
+            >
+              {usageMap[u].description}
+            </Badge>
+          );
+        })}
+      </Flex>
+      <PasswordInput
+        label={"API Key"}
+        placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        icon={icon}
+        value={apiKey}
+        onChange={handleKeyChange}
+      />
+      {setKeyFunRegion && (
+        <TextInput
+          label="Region"
+          placeholder="westus"
+          value={region}
+          onChange={(event) => setRegion(event.target.value)}
         />
-        {setKeyFunRegion && (
-          <TextInput
-            label="Region"
-            placeholder="westus"
-            value={region}
-            onChange={(event) => setRegion(event.target.value)}
-          />
-        )}
+      )}
+      <Text size="sm" my="md" color="gray.6">
         {descriptionBelowInput}
-        <Group position="right" mt="md">
-          <Button
-            type="submit"
-            disabled={initialKey === apiKey && initialRegion === region}
-          >
-            Save
-          </Button>
-          <Button onClick={closeModal} variant="light">
-            Cancel
-          </Button>
-        </Group>
-      </form>
-    </div>
+      </Text>
+      <Flex align={"center"} gap={"xs"}>
+        <IconAlertSquareRounded
+          size={55}
+          style={{ margin: 0, padding: 0, width: "auto", height: "auto" }}
+          stroke={1}
+          color={theme.colors.gray[8]}
+        />
+        <Text size={"xs"} color={theme.colors.gray[8]}>
+          Your API keys are stored locally and are not sent to any third-party
+          or intermediate servers.
+        </Text>
+        <Button
+          type="submit"
+          disabled={initialKey === apiKey && initialRegion === region}
+        >
+          Save
+        </Button>
+      </Flex>
+    </form>
   );
 }
 
@@ -142,93 +193,97 @@ export default function KeyModal({ close }: { close: () => void }) {
   const setApiKey11Labs = (key: string) => update({ apiKey11Labs: key });
 
   return (
-    <div>
-      <Box mx="auto">
-        <Tabs defaultValue="openai">
-          <Tabs.List>
-            <Tabs.Tab value="openai" icon={<IconRobot size={px("0.8rem")} />}>
-              OpenAI
-            </Tabs.Tab>
-            <Tabs.Tab
-              value="azure"
-              icon={<IconBrandWindows size={px("0.8rem")} />}
-            >
-              Azure
-            </Tabs.Tab>
-            <Tabs.Tab value="11labs" icon={<IconVolume size={px("0.8rem")} />}>
-              Eleven Labs
-            </Tabs.Tab>
-          </Tabs.List>
+    <Box mx="auto">
+      <Tabs defaultValue="openai" variant="pills" color={"gray.8"}>
+        <Tabs.List grow>
+          <Tabs.Tab
+            value="openai"
+            icon={<IconBrandOpenai stroke={1.1} size={px("0.8rem")} />}
+          >
+            OpenAI
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="azure"
+            icon={<IconBrandWindows stroke={1.1} size={px("0.8rem")} />}
+          >
+            Azure
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="11labs"
+            icon={<IconSpeakerphone stroke={1.1} size={px("0.8rem")} />}
+          >
+            Eleven Labs
+          </Tabs.Tab>
+        </Tabs.List>
 
-          <Tabs.Panel value="openai" pt="xs">
-            <APIPanel
-              name="Enter Your OpenAI API Key"
-              initialKey={apiKeyOpenAI}
-              setKeyFun={setApiKeyOpenAI}
-              descriptionAboveInput="You need an OpenAI API Key. Your API Key is stored locally on your browser and never sent anywhere else."
-              descriptionBelowInput={
-                <p>
-                  → Get your API key from the{" "}
-                  <a
-                    target="_blank"
-                    href="https://platform.openai.com/account/api-keys"
-                  >
-                    OpenAI dashboard
-                  </a>
-                  .
-                </p>
-              }
-              validateKey={testKeyOpenAI}
-              closeModal={close}
-            />
-          </Tabs.Panel>
-          <Tabs.Panel value="azure" pt="xs">
-            <APIPanel
-              name="Enter Your Azure Speech API Key"
-              initialKey={apiKeyAzure}
-              initialRegion={apiKeyAzureRegion}
-              setKeyFun={setApiKeyAzure}
-              setKeyFunRegion={setApiKeyAzureRegion}
-              descriptionAboveInput="If you'd like to use TTS via Azure, you will need an Azure Speech API Key. Your API Key is stored locally on your browser and never sent anywhere else. Note that cost estimation does not work for Azure, so watch your usage!"
-              descriptionBelowInput={
-                <p>
-                  → Azure gives a $200 free credit on signup.{" "}
-                  <a
-                    target="_blank"
-                    href="https://carldesouza.com/get-a-microsoft-cognitive-services-subscription-key/"
-                  >
-                    This guide explains the steps.
-                  </a>
-                </p>
-              }
-              validateKey={testKeyAzure}
-              closeModal={close}
-            />
-          </Tabs.Panel>
-          <Tabs.Panel value="11labs" pt="xs">
-            <APIPanel
-              name="Enter Your Eleven Labs API Key"
-              initialKey={apiKey11Labs}
-              setKeyFun={setApiKey11Labs}
-              descriptionAboveInput="If you'd like to use TTS via Eleven Labs, you will need an Eleven Labs API Key. Your API Key is stored locally on your browser and never sent anywhere else. Note that cost estimation does not work for ElevenLabs, so watch your usage!"
-              descriptionBelowInput={
-                <p>
-                  → Get your API key from your{" "}
-                  <a
-                    target="_blank"
-                    href="https://beta.elevenlabs.io/speech-synthesis"
-                  >
-                    ElevenLabs profile
-                  </a>
-                  .
-                </p>
-              }
-              validateKey={testKey11Labs}
-              closeModal={close}
-            />
-          </Tabs.Panel>
-        </Tabs>
-      </Box>
-    </div>
+        <Tabs.Panel value="openai" pt="xs">
+          <APIPanel
+            name="Enter Your OpenAI API Key"
+            initialKey={apiKeyOpenAI}
+            setKeyFun={setApiKeyOpenAI}
+            usage={["chat", "STT"]}
+            descriptionBelowInput={
+              <>
+                Get your API key from the {""}
+                <a
+                  target="_blank"
+                  href="https://platform.openai.com/account/api-keys"
+                >
+                  OpenAI dashboard
+                </a>
+                .
+              </>
+            }
+            validateKey={testKeyOpenAI}
+            closeModal={close}
+          />
+        </Tabs.Panel>
+        <Tabs.Panel value="azure" pt="xs">
+          <APIPanel
+            name="Enter Your Azure Speech API Key"
+            usage={["TTS", "STT"]}
+            initialKey={apiKeyAzure}
+            initialRegion={apiKeyAzureRegion}
+            setKeyFun={setApiKeyAzure}
+            setKeyFunRegion={setApiKeyAzureRegion}
+            descriptionBelowInput={
+              <p>
+                → Azure gives a $200 free credit on signup.{" "}
+                <a
+                  target="_blank"
+                  href="https://carldesouza.com/get-a-microsoft-cognitive-services-subscription-key/"
+                >
+                  This guide explains the steps.
+                </a>
+              </p>
+            }
+            validateKey={testKeyAzure}
+            closeModal={close}
+          />
+        </Tabs.Panel>
+        <Tabs.Panel value="11labs" pt="xs">
+          <APIPanel
+            name="Enter Your Eleven Labs API Key"
+            usage={["TTS"]}
+            initialKey={apiKey11Labs}
+            setKeyFun={setApiKey11Labs}
+            descriptionBelowInput={
+              <p>
+                → Get your API key from your{" "}
+                <a
+                  target="_blank"
+                  href="https://beta.elevenlabs.io/speech-synthesis"
+                >
+                  ElevenLabs profile
+                </a>
+                .
+              </p>
+            }
+            validateKey={testKey11Labs}
+            closeModal={close}
+          />
+        </Tabs.Panel>
+      </Tabs>
+    </Box>
   );
 }

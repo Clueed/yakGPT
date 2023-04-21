@@ -55,6 +55,19 @@ export default function App(props: AppProps) {
   const AudioPlayer =
     modelChoiceTTS === "azure" ? AzurePlayer : ElevenLabsPlayer;
 
+  const colorTheme = [
+    colorScheme === "light" ? "#f2f2f2" : "#0d0d0d",
+    colorScheme === "light" ? "#d9d9d9" : "#262626",
+    colorScheme === "light" ? "#bfbfbf" : "#404040",
+    colorScheme === "light" ? "#a6a6a6" : "#595959",
+    colorScheme === "light" ? "#8c8c8c" : "737373",
+    colorScheme === "light" ? "#737373" : "#8c8c8c",
+    colorScheme === "light" ? "#595959" : "#a6a6a6",
+    colorScheme === "light" ? "#404040" : "#000000",
+    colorScheme === "light" ? "#262626" : "#000000",
+    colorScheme === "light" ? "#0d0d0d" : "#000000",
+  ];
+
   return (
     <>
       <Head>
@@ -73,21 +86,9 @@ export default function App(props: AppProps) {
           theme={{
             /** Put your mantine theme override here */
             colorScheme,
-            primaryColor: "bluu",
             colors: {
-              // https://smart-swatch.netlify.app/#5E6AD2
-              bluu: [
-                "#e8edff",
-                "#c2c8f3",
-                "#9aa3e5",
-                "#727ed9",
-                "#4c59cd",
-                "#3240b3",
-                "#26318d",
-                "#1a2366",
-                "#0e1540",
-                "#04061b",
-              ],
+              primary: colorTheme,
+              dark: colorTheme,
             },
             spacing: {
               xxxs: "0.21875rem",
@@ -98,6 +99,7 @@ export default function App(props: AppProps) {
               lg: "1.25rem",
               xl: "1.5rem",
             },
+            primaryColor: "primary",
           }}
         >
           <Notifications />
