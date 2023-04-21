@@ -11,7 +11,7 @@ import "highlight.js/styles/stackoverflow-dark.css";
 
 import { useChatStore } from "@/stores/ChatStore";
 
-import Nav from "@/components/Nav";
+import Nav from "@/components/Nav/Nav";
 import { useEffect, useState } from "react";
 import UIController from "@/components/UIController";
 import { setColorScheme } from "@/stores/ChatActions";

@@ -1,4 +1,3 @@
-import { Chat } from "@/stores/Chat";
 import { deleteChat, setNavOpened, updateChat } from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
 import {
@@ -18,6 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import ChatHistoryEditButton from "./ChatHistoryEditButton";
+import groupChatsByDate, { defaultDateGroups } from "./groupChatsByDate";
 
 const useStyles = createStyles((theme) => ({
   chatHistoryContainer: {
@@ -140,50 +140,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-type ChatGroupBase = {
-  deltaDays: number;
-  label: string;
-};
-
-type ChatGroup = ChatGroupBase & {
-  chats: Chat[];
-};
-
-/**
- * Groups an array of chats by date, based on a given set of date groups.
- *
- * @param {Chat[]} chats - The array of chats to group.
- * @param {ChatGroupBase[]} dateGroups - The array of date groups to assign chats to..
- * @return {ChatGroup[]} An array of chat groups, each containing an array of chats.
- */
-function groupChatsByDate(chats: Chat[], dateGroups: ChatGroupBase[]) {
-  const sortedChats = [...chats].sort(
-    (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
-  );
-
-  const chatDateGroups: ChatGroup[] = dateGroups.map((group) => ({
-    ...group,
-    chats: [],
-  }));
-
-  const now = new Date();
-
-  for (const chat of sortedChats) {
-    const chatDate = new Date(chat.createdAt);
-    const diffTime = now.valueOf() - chatDate.valueOf();
-    const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
-
-    for (const group of chatDateGroups) {
-      if (diffDays <= group.deltaDays) {
-        group.chats.push(chat);
-        break;
-      }
-    }
-  }
-
-  return chatDateGroups.filter((group) => group.chats.length > 0);
-}
-
 export default function NavChatHistory() {
   const { classes, cx, theme } = useStyles();
 
@@ -204,15 +160,7 @@ export default function NavChatHistory() {
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const chats = useChatStore((state) => state.chats);
-
-  const dateGroups: ChatGroupBase[] = [
-    { deltaDays: 0, label: "Today" },
-    { deltaDays: 1, label: "Yesterday" },
-    { deltaDays: 7, label: "Last week" },
-    { deltaDays: 30, label: "Last month" },
-    { deltaDays: 365, label: "Last year" },
-  ];
-  const groupedChats = groupChatsByDate(chats, dateGroups);
+  const groupedChats = groupChatsByDate(chats, defaultDateGroups);
 
   const [editChatsHistory, setEditChatsHistory] = useState(false);
 

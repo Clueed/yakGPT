@@ -22,8 +22,8 @@ import {
   IconSun,
 } from "@tabler/icons-react";
 import ClearChatsButton from "./ClearChatsButton";
-import KeyModal from "./KeyModal";
-import SettingsModal from "./SettingsModal";
+import KeyModal from "../KeyModal";
+import SettingsModal from "../SettingsModal";
 import { useRouter } from "next/router";
 import { clearChats, setNavOpened } from "@/stores/ChatActions";
 import NavChatHistory from "./NavChatHistory";
