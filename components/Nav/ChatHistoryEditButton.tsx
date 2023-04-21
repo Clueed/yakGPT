@@ -46,7 +46,7 @@ export default function ChatHistoryEditButton({ editMode, setEditMode }) {
           withArrow
           color="red.4"
           sx={{
-            color: theme.colors.gray[9],
+            color: theme.colors.primary[9],
             fontWeight: 500,
           }}
         >
@@ -78,16 +78,8 @@ export default function ChatHistoryEditButton({ editMode, setEditMode }) {
       )}
 
       <Button
-        variant={editMode ? "filled" : "light"}
-        color={
-          editMode
-            ? theme.colorScheme === "dark"
-              ? "gray.8"
-              : "gray.5"
-            : theme.colorScheme === "dark"
-            ? "gray.5"
-            : "gray.6"
-        }
+        variant={editMode ? "filled" : "subtle"}
+        color={theme.colors.primary[0]}
         h="28px"
         compact={!isSmall}
         fullWidth

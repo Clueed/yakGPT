@@ -26,6 +26,19 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
   console.log(metric);
 }
 
+import { Tuple, DefaultMantineColor } from "@mantine/core";
+
+type ExtendedCustomColors =
+  | "primary"
+  //| "secondaryColorName"
+  | DefaultMantineColor;
+
+declare module "@mantine/core" {
+  export interface MantineThemeColorsOverride {
+    colors: Record<ExtendedCustomColors, Tuple<string, 10>>;
+  }
+}
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
@@ -55,17 +68,43 @@ export default function App(props: AppProps) {
   const AudioPlayer =
     modelChoiceTTS === "azure" ? AzurePlayer : ElevenLabsPlayer;
 
-  const colorTheme = [
-    colorScheme === "light" ? "#f2f2f2" : "#0d0d0d",
-    colorScheme === "light" ? "#d9d9d9" : "#262626",
-    colorScheme === "light" ? "#bfbfbf" : "#404040",
-    colorScheme === "light" ? "#a6a6a6" : "#595959",
-    colorScheme === "light" ? "#8c8c8c" : "737373",
-    colorScheme === "light" ? "#737373" : "#8c8c8c",
-    colorScheme === "light" ? "#595959" : "#a6a6a6",
-    colorScheme === "light" ? "#404040" : "#000000",
-    colorScheme === "light" ? "#262626" : "#000000",
-    colorScheme === "light" ? "#0d0d0d" : "#000000",
+  const dark = [
+    "#E3E3E3",
+    "#BEBEBE",
+    "#8C8C8C",
+    "#535353",
+    "#262626",
+    "#222222",
+    "#1E1E1E",
+    "#141414",
+    "#101010",
+    "#0A0A0A",
+  ];
+
+  const light = [
+    "#f2f2f2",
+    "#d9d9d9",
+    "#bfbfbf",
+    "#a6a6a6",
+    "#8c8c8c",
+    "#737373",
+    "#595959",
+    "#404040",
+    "#262626",
+    "#0d0d0d",
+  ];
+
+  const dynamic = [
+    colorScheme === "light" ? light[0] : dark[6], // 0
+    colorScheme === "light" ? light[1] : dark[4], // 1
+    colorScheme === "light" ? light[2] : dark[2], // 2
+    colorScheme === "light" ? light[3] : dark[3], // 3
+    colorScheme === "light" ? light[4] : dark[3], // 4
+    colorScheme === "light" ? light[5] : dark[3], // 5
+    colorScheme === "light" ? light[6] : dark[2], // 6
+    colorScheme === "light" ? light[7] : dark[7], // 7
+    colorScheme === "light" ? light[8] : dark[1], // 8
+    colorScheme === "light" ? light[9] : dark[0], // 9
   ];
 
   return (
@@ -87,8 +126,19 @@ export default function App(props: AppProps) {
             /** Put your mantine theme override here */
             colorScheme,
             colors: {
-              primary: colorTheme,
-              dark: colorTheme,
+              primary: dynamic,
+              dark: [
+                dark[0], // 0
+                dark[1], // 1
+                dark[2], // 2
+                dark[3], // 3
+                dark[4], // 4
+                dark[5], // 5
+                dark[6], // 6
+                dark[7], // 7
+                dark[8], // 8
+                dark[9], // 9
+              ],
             },
             spacing: {
               xxxs: "0.21875rem",

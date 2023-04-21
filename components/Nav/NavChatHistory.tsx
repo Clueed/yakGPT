@@ -63,19 +63,13 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.xs,
     paddingLeft: theme.spacing.xxs,
     paddingRight: theme.spacing.xxs,
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[5],
+    color: theme.colors.primary[4],
     paddingBottom: theme.spacing.xxxs,
 
     [theme.fn.smallerThan("sm")]: {
       fontSize: theme.fontSizes.xl,
       paddingTop: theme.spacing.xl,
       paddingBottom: theme.spacing.xxs,
-    },
-    ["&.li:first-of-type"]: {
-      color: theme.colors.red[6],
     },
   },
 
@@ -90,12 +84,10 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.xxs,
     paddingBottom: theme.spacing.xxs,
 
+    transition: "background-color 0.5s ease-out",
+
     [`&:hover:not(.${getStylesRef("linkActive")})`]: {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[1],
-      color: theme.colorScheme === "dark" ? theme.white : theme.black,
+      backgroundColor: theme.colors.primary[1],
     },
 
     [theme.fn.smallerThan("sm")]: {
@@ -105,15 +97,9 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     ref: getStylesRef("linkActive"),
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[5]
-        : theme.colors.gray[1],
+    backgroundColor: theme.colors.primary[1],
     [`& > .${getStylesRef("chatLinkText")}`]: {
-      color:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[1]
-          : theme.colors.gray[8],
+      color: theme.colors.primary[8],
       fontWeight: 600,
     },
   },
@@ -122,10 +108,7 @@ const useStyles = createStyles((theme) => ({
     ref: getStylesRef("chatLinkText"),
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[2]
-        : theme.colors.gray[6],
+    color: theme.colors.primary[6],
     lineHeight: "15px", // depends on icons
     maskImage: "linear-gradient(to right, black 90%, transparent 100%)",
     textOverflow: `clip`,
@@ -178,7 +161,7 @@ export default function NavChatHistory() {
           borderRadius: theme.spacing.xxs,
           overflow: "hidden",
         }}
-        bg="gray.0"
+        bg={theme.colors.primary[0]}
       >
         <Box className={classes.chatHistoryContainer}>
           <ul className={classes.list}>
@@ -252,7 +235,7 @@ export default function NavChatHistory() {
                             >
                               <IconPencil
                                 stroke={1.5}
-                                color={theme.colors.dark[2]}
+                                color={theme.colors.primary[2]}
                               />
                             </ActionIcon>
                           )}
