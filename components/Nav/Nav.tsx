@@ -1,3 +1,4 @@
+import { setNavOpened } from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
 import {
   Button,
@@ -9,18 +10,14 @@ import {
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
-  IconKey,
   IconMoon,
   IconPlus,
   IconSettings,
-  IconSun,
+  IconSun
 } from "@tabler/icons-react";
-import KeyModal from "../Settings/KeyModal";
-import SettingsModal from "../Settings/SettingsModal";
-import { useRouter } from "next/router";
-import { setNavOpened } from "@/stores/ChatActions";
-import NavChatHistory from "./NavChatHistory";
 import Link from "next/link";
+import SettingsModal from "../Settings/SettingsModal";
+import NavChatHistory from "./NavChatHistory";
 
 const useStyles = createStyles((theme) => ({
   secondaryButton: {
@@ -49,10 +46,6 @@ const useStyles = createStyles((theme) => ({
 export default function NavbarSimple() {
   const { classes, cx, theme } = useStyles();
 
-  const router = useRouter();
-
-  const [openedKeyModal, { open: openKeyModal, close: closeKeyModal }] =
-    useDisclosure(false);
   const [
     openedSettingsModal,
     { open: openSettingsModal, close: closeSettingsModal },
@@ -101,38 +94,11 @@ export default function NavbarSimple() {
           {colorScheme === "light" ? "Dark" : "Light"} theme
         </Button>
 
-        <KeyModal
-          close={closeKeyModal}
-          opened={openedKeyModal}
-          onClose={closeKeyModal}
-        />
-
-        <SettingsModal
-          close={closeSettingsModal}
-          opened={openedSettingsModal}
-          onClose={closeSettingsModal}
-        />
-
         <Button
           variant="subtle"
           compact
           className={classes.secondaryButton}
           onClick={() => {
-            openedSettingsModal && closeSettingsModal();
-            openKeyModal();
-            if (isSmall) setNavOpened(false);
-          }}
-          leftIcon={<IconKey className={classes.secondaryButtonIcon} />}
-        >
-          API Keys
-        </Button>
-
-        <Button
-          variant="subtle"
-          compact
-          className={classes.secondaryButton}
-          onClick={() => {
-            openedKeyModal && closeKeyModal();
             openSettingsModal();
 
             if (isSmall) setNavOpened(false);
@@ -141,6 +107,12 @@ export default function NavbarSimple() {
         >
           Settings
         </Button>
+
+        <SettingsModal
+          close={closeSettingsModal}
+          opened={openedSettingsModal}
+          onClose={closeSettingsModal}
+        />
       </Navbar.Section>
     </Navbar>
   );
