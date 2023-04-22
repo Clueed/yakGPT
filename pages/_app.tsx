@@ -4,6 +4,7 @@ import {
   AppShell,
   ColorScheme,
   ColorSchemeProvider,
+  Flex,
   MantineProvider,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
@@ -13,7 +14,7 @@ import { useChatStore } from "@/stores/ChatStore";
 
 import Nav from "@/components/Nav/Nav";
 import { useEffect, useState } from "react";
-import UIController from "@/components/UIController";
+import ChatInputCluster from "@/components/InputCluster/InputCluster";
 import { setColorScheme } from "@/stores/ChatActions";
 import ElevenLabsPlayer from "@/components/ElevenLabsPlayer";
 import AzurePlayer from "@/components/AzurePlayer";
@@ -27,6 +28,8 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
 }
 
 import { Tuple, DefaultMantineColor } from "@mantine/core";
+import Hero from "@/components/Hero";
+import MuHeader from "@/components/MuHeader";
 
 type ExtendedCustomColors =
   | "primary"
@@ -161,11 +164,12 @@ export default function App(props: AppProps) {
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
           >
-            <div style={{ position: "relative", height: "100%" }}>
+            <Flex direction={"column"} h={"100%"}>
+              <MuHeader />
               <Component {...pageProps} />
 
-              {apiKey && <UIController />}
-            </div>
+              {apiKey && <ChatInputCluster />}
+            </Flex>
             {playerMode && <AudioPlayer />}
           </AppShell>
         </MantineProvider>

@@ -34,41 +34,12 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  title: {
-    color: theme.colorScheme === "dark" ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: rem(44),
-    lineHeight: 1.2,
-    fontWeight: 900,
-
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: rem(28),
-    },
-  },
-
   control: {
     [theme.fn.smallerThan("xs")]: {
       flex: 1,
     },
   },
 
-  image: {
-    flex: 1,
-
-    [theme.fn.smallerThan("md")]: {
-      display: "none",
-    },
-  },
-
-  highlight: {
-    position: "relative",
-    backgroundColor: theme.fn.variant({
-      variant: "light",
-      color: theme.primaryColor,
-    }).background,
-    borderRadius: theme.radius.sm,
-    padding: `${rem(4)} ${rem(12)}`,
-  },
 }));
 
 export default function Hero() {

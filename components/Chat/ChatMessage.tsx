@@ -10,10 +10,10 @@ import {
 
 import { useChatStore } from "@/stores/ChatStore";
 import { IconEdit, IconRepeat, IconSettings } from "@tabler/icons-react";
-import MessageDisplay from "./MessageDisplay";
+import MessageDisplay from "../MessageDisplay";
 
-import UserIcon from "./UserIcon";
-import AssistantIcon from "./AssistantIcon";
+import UserIcon from "../UserIcon";
+import AssistantIcon from "../AssistantIcon";
 import { Message } from "@/stores/Message";
 import {
   regenerateAssistantMessage,
@@ -21,26 +21,12 @@ import {
 } from "@/stores/ChatActions";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-
-    [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      paddingBottom: "5em",
-    },
-  },
-  chatContainer: {
-    overflowY: "scroll",
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
-  },
   messageContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: theme.radius.md,
     paddingLeft: 0,
     paddingRight: 0,
     [`@media (min-width: ${theme.breakpoints.md})`]: {
@@ -51,9 +37,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     [`&:hover .${getStylesRef("button")}`]: {
       opacity: 1,
     },
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[3]
-    }`,
+
   },
   message: {
     borderRadius: theme.radius.sm,

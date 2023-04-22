@@ -9,10 +9,10 @@ import {
   IconVolumeOff,
   IconVolume,
 } from "@tabler/icons-react";
-import ChatTextInput from "./ChatTextInput";
+import ChatTextInput from "./TextInput";
 import { usePlayerStore } from "@/stores/PlayerStore";
 import { useRouter } from "next/router";
-import UIControllerSettings from "./UIControllerSettings";
+import ChatInputClusterSettings from "./InputClusterSettings";
 import * as OpusRecorder from "@/stores/RecorderActions";
 import * as AzureRecorder from "@/stores/AzureRecorderActions";
 import {
@@ -194,7 +194,7 @@ const RecorderControls = () => {
           <IconX size={px("1.1rem")} stroke={1.5} />
         </Button>
       ) : (
-        <UIControllerSettings />
+        <ChatInputClusterSettings />
       )}
 
       <Button
@@ -215,7 +215,7 @@ const RecorderControls = () => {
   );
 };
 
-export default function UIController() {
+export default function ChatInputCluster() {
   const { classes } = styles();
 
   return (

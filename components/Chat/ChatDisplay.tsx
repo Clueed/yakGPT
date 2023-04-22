@@ -7,8 +7,7 @@ import {
   px,
 } from "@mantine/core";
 import { useChatStore } from "@/stores/ChatStore";
-import NewChat from "./NewChat";
-import MuHeader from "./MuHeader";
+import NewChat from "../NewChat";
 
 import ChatMessage from "./ChatMessage";
 import { IconChevronsDown } from "@tabler/icons-react";
@@ -21,6 +20,8 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     flexDirection: "column",
     height: "100%",
 
+    
+
     [`@media (min-width: ${theme.breakpoints.sm})`]: {
       paddingBottom: "5em",
     },
@@ -30,81 +31,10 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     flexGrow: 1,
     display: "flex",
     flexDirection: "column",
+    gap: theme.spacing.md,
   },
-  messageContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 0,
-    paddingRight: 0,
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      paddingLeft: theme.spacing.xl,
-      paddingRight: theme.spacing.xl,
-    },
-
-    [`&:hover .${getStylesRef("button")}`]: {
-      opacity: 1,
-    },
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[3]
-    }`,
-  },
-  message: {
-    borderRadius: theme.radius.sm,
-    paddingLeft: theme.spacing.xs,
-    paddingRight: theme.spacing.xs,
-    marginTop: theme.spacing.md,
-    marginBottom: theme.spacing.md,
-    display: "inline-block",
-    maxWidth: "800px",
-    wordWrap: "break-word",
-    fontSize: theme.fontSizes.sm,
-    width: "100%",
-  },
-  userMessageContainer: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[8]
-        : theme.colors.gray[1],
-  },
-  botMessageContainer: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[7]
-        : theme.colors.gray[2],
-  },
-  userMessage: {
-    // All children that are textarea should have color white
-    "& textarea": {
-      fontSize: "inherit",
-      marginInlineStart: "0px",
-      marginInlineEnd: "0px",
-    },
-  },
-  botMessage: {},
-  actionIcon: {
-    ref: getStylesRef("button"),
-
-    opacity: 0,
-    transition: "opacity 0.2s ease-in-out",
-  },
-  textArea: {
-    width: "100%",
-  },
-  messageDisplay: {
-    marginLeft: theme.spacing.md,
-  },
-  messageWrapper: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-  },
-  topOfMessage: {
-    alignSelf: "start",
-    marginTop: theme.spacing.sm,
-  },
+  
+  
 }));
 
 const ChatDisplay = () => {
@@ -164,7 +94,7 @@ const ChatDisplay = () => {
       style={{ paddingBottom: pushToTalkMode ? "7em" : "5em" }}
     >
       <div className={classes.chatContainer}>
-        <MuHeader />
+        
 
         {!activeChatId && <NewChat />}
         {activeChat?.messages.map((message, idx) => (

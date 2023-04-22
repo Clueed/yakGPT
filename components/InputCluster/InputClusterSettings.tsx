@@ -31,7 +31,7 @@ function MenuItem({
   );
 }
 
-export default function UIController() {
+export default function ChatInputClusterSettings() {
   const showTextDuringPTT = useChatStore((state) => state.showTextDuringPTT);
   const modelChoicesChat =
     useChatStore((state) => state.modelChoicesChat) || [];
