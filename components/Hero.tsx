@@ -135,9 +135,7 @@ export default function Hero() {
             </Group>
           </div>
         </div>
-        <Modal opened={opened} onClose={close} title="API Key">
-          <KeyModal close={close} />
-        </Modal>
+        <KeyModal opened={opened} close={close} onClose={close} />
       </Container>
     </div>
   );

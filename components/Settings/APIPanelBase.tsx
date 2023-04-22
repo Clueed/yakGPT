@@ -79,8 +79,8 @@ export function APIPanelBase({ config }: { config: ApiPanelConfig }) {
     success: <IconCheck color="green" size={px("1rem")} />,
     error: <IconX color="red" size={px("1rem")} />,
   };
+
   const icon = iconMap[checkStatus];
-  console.log(apiKey);
 
   const usageMap = {
     STT: { icon: IconMicrophone, description: "Speech-to-text" },

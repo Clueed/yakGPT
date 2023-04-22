@@ -2,7 +2,6 @@ import { useChatStore } from "@/stores/ChatStore";
 import {
   Button,
   MediaQuery,
-  Modal,
   Navbar,
   Space,
   createStyles,

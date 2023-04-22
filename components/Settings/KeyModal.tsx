@@ -23,19 +23,19 @@ export default function KeyModal({
           <Tabs.List grow>
             <Tabs.Tab
               value="openai"
-              icon={<IconBrandOpenai stroke={1.1} size={px("0.8rem")} />}
+              icon={<IconBrandOpenai stroke={1.5} size={px("1.3rem")} />}
             >
               OpenAI
             </Tabs.Tab>
             <Tabs.Tab
               value="azure"
-              icon={<IconBrandWindows stroke={1.1} size={px("0.8rem")} />}
+              icon={<IconBrandWindows stroke={1.5} size={px("1.3rem")} />}
             >
               Azure
             </Tabs.Tab>
             <Tabs.Tab
-              value="11labs"
-              icon={<IconSpeakerphone stroke={1.1} size={px("0.8rem")} />}
+              value="elevenLabs"
+              icon={<IconSpeakerphone stroke={1.5} size={px("1.3rem")} />}
             >
               Eleven Labs
             </Tabs.Tab>

@@ -1,4 +1,3 @@
-import { OpenAiSettingsPanel } from "./../../OpenAiSettingsPanel";
 import * as Azure from "@/stores/AzureSDK";
 import { refreshModels, updateSettingsForm } from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
@@ -23,7 +22,6 @@ import {
   px,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useMediaQuery } from "@mantine/hooks";
 import {
   IconBrandOpenai,
   IconBrandWindows,
@@ -31,8 +29,8 @@ import {
 } from "@tabler/icons-react";
 import ISO6391 from "iso-639-1";
 import { useEffect, useState } from "react";
-import { APIPanel } from "./APIPanel";
 import { azureCandidateLanguages } from "../azureLangs";
+import { APIPanel } from "./APIPanel";
 
 function getLanguages(): Array<{ label: string; value: string }> {
   const languageCodes: Array<string> = ISO6391.getAllCodes();
@@ -48,6 +46,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     //fontWeight: 500,
     color: theme.colors.primary[6],
     marginTop: theme.spacing.xxl,
+    paddingTop: theme.spacing.xxl,
     marginBottom: theme.spacing.sm,
   },
 }));
@@ -143,8 +142,6 @@ export default function SettingsModal({
 
   const { classes, theme } = useStyles();
 
-  const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-
   return (
     <Modal opened={opened} onClose={onClose} title="Settings" zIndex={9999}>
       <Box mx="0">
@@ -152,25 +149,31 @@ export default function SettingsModal({
           <Tabs.List grow mb={"md"}>
             <Tabs.Tab
               value="openai"
-              icon={<IconBrandOpenai stroke={1.1} size={px("0.8rem")} />}
+              icon={<IconBrandOpenai stroke={1.5} size={px("1.3rem")} />}
             >
               OpenAI
             </Tabs.Tab>
             <Tabs.Tab
               value="azure"
-              icon={<IconBrandWindows stroke={1.1} size={px("0.8rem")} />}
+              icon={<IconBrandWindows stroke={1.5} size={px("1.3rem")} />}
             >
               Azure
             </Tabs.Tab>
             <Tabs.Tab
               value="elevenLabs"
-              icon={<IconSpeakerphone stroke={1.1} size={px("0.8rem")} />}
+              icon={<IconSpeakerphone stroke={1.5} size={px("1.3rem")} />}
             >
               Eleven Labs
             </Tabs.Tab>
           </Tabs.List>
 
-          <ScrollArea type="hover" offsetScrollbars h={"70vh"}>
+          <ScrollArea.Autosize
+            type="hover"
+            offsetScrollbars
+            //h="100%"
+            mah={"70vh"}
+            //sx={{ maxHeight: "70vh" }}
+          >
             <Tabs.Panel value="openai" pt="xs">
               <APIPanel provider="openAi" />
               <form
@@ -239,7 +242,7 @@ export default function SettingsModal({
                       />
                     </label>
                     <label>
-                      <Text size="sm">N ({form.values.n})</Text>
+                      <Text size="sm">N</Text>
                       <Slider
                         value={form.values.n}
                         label={form.values.n}
@@ -438,7 +441,7 @@ export default function SettingsModal({
                 ></Select>
               </form>
             </Tabs.Panel>
-          </ScrollArea>
+          </ScrollArea.Autosize>
         </Tabs>
         <Group position="apart" mt="md">
           <Button
