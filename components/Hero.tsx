@@ -1,3 +1,4 @@
+import { YakTextLogo } from './YakTextLogo';
 import {
   createStyles,
   Image,
@@ -79,9 +80,7 @@ export default function Hero() {
       <Container>
         <div className={classes.inner}>
           <div className={classes.content}>
-            <Title className={classes.title}>
-              <span className={classes.highlight}>YakGPT</span>
-            </Title>
+            <YakTextLogo fontSize={60}  />
             <Text color="dimmed" mt="md">
               A simple, locally running ChatGPT UI.
             </Text>
