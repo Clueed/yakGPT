@@ -1,34 +1,26 @@
 import { useChatStore } from "@/stores/ChatStore";
 import {
-  Burger,
   Button,
-  Divider,
   MediaQuery,
   Modal,
   Navbar,
   Space,
   createStyles,
-  getStylesRef,
-  rem,
   useMantineColorScheme,
 } from "@mantine/core";
-import { upperFirst, useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
-  IconEdit,
   IconKey,
   IconMoon,
   IconPlus,
   IconSettings,
   IconSun,
 } from "@tabler/icons-react";
-import ClearChatsButton from "./ClearChatsButton";
-import KeyModal from "../KeyModal";
-import SettingsModal from "../SettingsModal";
+import KeyModal from "../Settings/KeyModal";
+import SettingsModal from "../Settings/SettingsModal";
 import { useRouter } from "next/router";
-import { clearChats, setNavOpened } from "@/stores/ChatActions";
+import { setNavOpened } from "@/stores/ChatActions";
 import NavChatHistory from "./NavChatHistory";
-import NavButton from "./NavButton";
-import { useState } from "react";
 import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
@@ -110,23 +102,17 @@ export default function NavbarSimple() {
           {colorScheme === "light" ? "Dark" : "Light"} theme
         </Button>
 
-        <Modal
+        <KeyModal
+          close={closeKeyModal}
           opened={openedKeyModal}
           onClose={closeKeyModal}
-          title="API Keys"
-          zIndex={9999}
-        >
-          <KeyModal close={closeKeyModal} />
-        </Modal>
+        />
 
-        <Modal
+        <SettingsModal
+          close={closeSettingsModal}
           opened={openedSettingsModal}
           onClose={closeSettingsModal}
-          title="Settings"
-          zIndex={9999}
-        >
-          <SettingsModal close={closeSettingsModal} />
-        </Modal>
+        />
 
         <Button
           variant="subtle"

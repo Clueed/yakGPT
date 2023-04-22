@@ -148,6 +148,7 @@ export default function App(props: AppProps) {
               md: "1rem",
               lg: "1.25rem",
               xl: "1.5rem",
+              xxl: "2rem",
             },
             primaryColor: "primary",
           }}
