@@ -4,18 +4,19 @@ import {
   createStyles,
   Flex,
   getStylesRef,
-  MantineTheme, Tooltip
+  MantineTheme,
+  Tooltip,
 } from "@mantine/core";
 
 import {
   IconCheck,
-  IconCopy, IconRepeat,
+  IconCopy,
+  IconRepeat,
   IconRobot,
   IconSettings,
-  IconUser
+  IconUser,
 } from "@tabler/icons-react";
 import MessageDisplay from "../MessageDisplay";
-
 
 import { Message } from "@/stores/Message";
 import {
@@ -59,17 +60,17 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     ref: getStylesRef("button"),
 
     opacity: 1,
-    transition: "opacity 0.2s ease-in-out",
   },
 
   toolBarIcon: {
     height: "1rem",
     width: "1rem",
     color: theme.colors.primary[5],
-    '&:hover': {
+    transition: "transform 0.2s ease-in-out",
+    "&:hover": {
       color: theme.colors.primary[9],
       transform: "scale(1.1)",
-    }
+    },
   },
 
   avatarIcon: {
@@ -90,7 +91,6 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     paddingLeft: theme.spacing.sm,
     paddingRight: theme.spacing.sm,
   },
-
 }));
 
 export default function ChatDisplay({ message }: { message: Message }) {
@@ -118,9 +118,7 @@ export default function ChatDisplay({ message }: { message: Message }) {
           //<Avatar size="sm" radius="md" my="xxs" mr="xs" variant="light">
         }
         <Box sx={{ flex: 1 }}>
-
-
-          <CopyButton value={message.content} >
+          <CopyButton value={message.content}>
             {({ copied, copy }) =>
               copied ? (
                 <IconCheck className={classes.toolBarIcon} />
@@ -159,21 +157,17 @@ export default function ChatDisplay({ message }: { message: Message }) {
             </Tooltip>
           )}
 
-
           <Tooltip label="Delete message" withArrow>
-
             <IconX
               className={classes.toolBarIcon}
               onClick={() => delMessage(message)}
             />
           </Tooltip>
-
-
         </Flex>
       </Flex>
       <div className={classes.messageContent}>
         <MessageDisplay message={message} />
       </div>
-    </div >
+    </div>
   );
 }

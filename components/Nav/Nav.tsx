@@ -1,43 +1,45 @@
 import { setNavOpened } from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
 import {
+  ActionIcon,
   Button,
+  Group,
   MediaQuery,
   Navbar,
   Space,
+  Tooltip,
   createStyles,
   useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
+  IconKey,
   IconMoon,
   IconPlus,
   IconSettings,
-  IconSun
+  IconSun,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import SettingsModal from "../Settings/SettingsModal";
 import NavChatHistory from "./NavChatHistory";
+import KeyModal from "../Settings/KeyModal";
 
 const useStyles = createStyles((theme) => ({
   secondaryButton: {
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[6],
+    color: theme.colors.primary[5],
 
     fontWeight: 500,
 
+    transition: "transform 0.2s ease-in-out",
+
     [":hover"]: {
-      color:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[0]
-          : theme.colors.gray[7],
+      color: theme.colors.primary[9],
+      transform: "scale(1.1)",
     },
   },
 
   secondaryButtonIcon: {
-    strokeWidth: 1.5,
+    strokeWidth: 1.75,
     width: 20,
     height: 20,
   },
@@ -50,6 +52,9 @@ export default function NavbarSimple() {
     openedSettingsModal,
     { open: openSettingsModal, close: closeSettingsModal },
   ] = useDisclosure(false);
+
+  const [openedKeyModal, { open: openKeyModal, close: closeKeyModal }] =
+    useDisclosure(false);
 
   const navOpened = useChatStore((state) => state.navOpened);
 
@@ -79,39 +84,60 @@ export default function NavbarSimple() {
         </Link>
       </Navbar.Section>
 
-      <Navbar.Section grow my="md" sx={{ overflowY: "hidden" }}>
+      <Navbar.Section grow mt="md" mb="xxs" sx={{ overflowY: "hidden" }}>
         <NavChatHistory />
       </Navbar.Section>
 
       <Navbar.Section>
-        <Button
-          variant="subtle"
-          compact
-          className={classes.secondaryButton}
-          onClick={() => toggleColorScheme()}
-          leftIcon={<DarkModeIcon className={classes.secondaryButtonIcon} />}
-        >
-          {colorScheme === "light" ? "Dark" : "Light"} theme
-        </Button>
+        <Group position="apart" mx="md">
+          <Tooltip withArrow label="Settings">
+            <ActionIcon
+              variant="subtle"
+              className={classes.secondaryButton}
+              onClick={() => {
+                openSettingsModal();
 
-        <Button
-          variant="subtle"
-          compact
-          className={classes.secondaryButton}
-          onClick={() => {
-            openSettingsModal();
-
-            if (isSmall) setNavOpened(false);
-          }}
-          leftIcon={<IconSettings className={classes.secondaryButtonIcon} />}
-        >
-          Settings
-        </Button>
-
+                if (isSmall) setNavOpened(false);
+              }}
+            >
+              <IconSettings className={classes.secondaryButtonIcon} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip withArrow label="API keys">
+            <ActionIcon
+              variant="subtle"
+              className={classes.secondaryButton}
+              onClick={() => {
+                openedSettingsModal && closeSettingsModal();
+                openKeyModal();
+                if (isSmall) setNavOpened(false);
+              }}
+            >
+              <IconKey className={classes.secondaryButtonIcon} />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip
+            withArrow
+            label={(colorScheme === "light" ? "Dark" : "Light") + " theme"}
+          >
+            <ActionIcon
+              variant="subtle"
+              className={classes.secondaryButton}
+              onClick={() => toggleColorScheme()}
+            >
+              <DarkModeIcon className={classes.secondaryButtonIcon} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
         <SettingsModal
           close={closeSettingsModal}
           opened={openedSettingsModal}
           onClose={closeSettingsModal}
+        />
+        <KeyModal
+          close={closeKeyModal}
+          opened={openedKeyModal}
+          onClose={closeKeyModal}
         />
       </Navbar.Section>
     </Navbar>
