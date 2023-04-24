@@ -8,13 +8,6 @@ import mdCodeCopy from "./markdownCopy";
 
 import { createStyles, keyframes, MantineTheme } from "@mantine/core";
 
-interface Props {
-  message: Message;
-  showRetry?: boolean;
-  onRetry?: () => void;
-  className?: string;
-}
-
 const blink = keyframes`
   0%, 49% {
     opacity: 1;
@@ -25,12 +18,6 @@ const blink = keyframes`
 `;
 
 const useStyles = createStyles((theme: MantineTheme) => ({
-  container: {
-    maxWidth: "calc(100vw - 55px)",
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      maxWidth: "calc(820px - 120px)",
-    },
-  },
   // This is implemented in the most horrible way and needs a FF bad
   copyText: {
     "&::before": {
@@ -50,6 +37,9 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     "& pre": {
       overflowX: "scroll",
     },
+    "& p": {
+      margin: 0,
+    },
     "& table": {
       width: "100%",
       minWidth: "50%",
@@ -67,11 +57,10 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
     "& th, & td": {
       padding: theme.spacing.xs,
-      border: `1px solid ${
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[8]
-          : theme.colors.gray[3]
-      }`,
+      border: `1px solid ${theme.colorScheme === "dark"
+        ? theme.colors.dark[8]
+        : theme.colors.gray[3]
+        }`,
       textAlign: "left",
       fontWeight: theme.colorScheme === "dark" ? 300 : 400,
       color:
@@ -111,7 +100,8 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
   },
 }));
-export default ({ message, className }: Props) => {
+
+export default ({ message }: { message: Message }) => {
   const { classes, cx } = useStyles();
 
   const htmlString = () => {
@@ -134,11 +124,9 @@ export default ({ message, className }: Props) => {
   };
 
   return (
-    <div className={cx(className, classes.container)}>
-      <div
-        className={cx(classes.message, message.loading && classes.loading)}
-        dangerouslySetInnerHTML={{ __html: htmlString() }}
-      ></div>
-    </div>
+    <div
+      className={cx(classes.message, message.loading && classes.loading)}
+      dangerouslySetInnerHTML={{ __html: htmlString() }}
+    ></div>
   );
 };

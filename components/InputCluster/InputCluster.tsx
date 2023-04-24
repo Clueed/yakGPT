@@ -25,22 +25,9 @@ const styles = createStyles((theme: MantineTheme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      left: 200,
-    },
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      left: 250,
-    },
-    right: 0,
-    zIndex: 1,
-    maxWidth: 820,
-    margin: "0 auto",
-    paddingBottom: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
+    marginLeft: theme.spacing.sm,
+    marginRight: theme.spacing.sm,
+    marginBottom: theme.spacing.sm,
   },
   playerControls: {
     display: "flex",

@@ -1,113 +1,100 @@
 import {
-  ActionIcon,
-  Avatar,
+  Box,
+  CopyButton,
   createStyles,
+  Flex,
   getStylesRef,
-  MantineTheme,
-  MediaQuery,
-  px,
+  MantineTheme, Tooltip
 } from "@mantine/core";
 
-import { useChatStore } from "@/stores/ChatStore";
-import { IconEdit, IconRepeat, IconSettings } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconCopy, IconRepeat,
+  IconRobot,
+  IconSettings,
+  IconUser
+} from "@tabler/icons-react";
 import MessageDisplay from "../MessageDisplay";
 
-import UserIcon from "../UserIcon";
-import AssistantIcon from "../AssistantIcon";
+
 import { Message } from "@/stores/Message";
 import {
   regenerateAssistantMessage,
   setEditingMessage,
+  delMessage,
 } from "@/stores/ChatActions";
+import { IconPencil } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
   messageContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
-    borderRadius: theme.radius.md,
-    paddingLeft: 0,
-    paddingRight: 0,
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      paddingLeft: theme.spacing.xl,
-      paddingRight: theme.spacing.xl,
-    },
+    alignItems: "start",
+
+    //paddingTop: theme.spacing.sm,
+    //paddingBottom: theme.spacing.sm,
+    //paddingLeft: theme.spacing.sm,
+    //paddingRight: theme.spacing.sm,
+
+    fontSize: theme.fontSizes.sm,
+    borderRadius: theme.radius.sm,
+    overflow: "hidden",
+    maxWidth: "100%",
 
     [`&:hover .${getStylesRef("button")}`]: {
       opacity: 1,
     },
+  },
 
-  },
-  message: {
-    borderRadius: theme.radius.sm,
-    paddingLeft: theme.spacing.xs,
-    paddingRight: theme.spacing.xs,
-    marginTop: theme.spacing.md,
-    marginBottom: theme.spacing.md,
-    display: "inline-block",
-    maxWidth: "800px",
-    wordWrap: "break-word",
-    fontSize: theme.fontSizes.sm,
-    width: "100%",
-  },
   userMessageContainer: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[8]
-        : theme.colors.gray[1],
+    backgroundColor: theme.colors.primary[0],
   },
   botMessageContainer: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[7]
-        : theme.colors.gray[2],
+    backgroundColor: theme.colors.primary[1],
   },
-  userMessage: {
-    // All children that are textarea should have color white
-    "& textarea": {
-      fontSize: "inherit",
-      marginInlineStart: "0px",
-      marginInlineEnd: "0px",
-    },
-  },
-  botMessage: {},
+
   actionIcon: {
     ref: getStylesRef("button"),
 
-    opacity: 0,
+    opacity: 1,
     transition: "opacity 0.2s ease-in-out",
   },
-  textArea: {
-    width: "100%",
+
+  toolBarIcon: {
+    height: "1rem",
+    width: "1rem",
+    color: theme.colors.primary[5],
+    '&:hover': {
+      color: theme.colors.primary[9],
+      transform: "scale(1.1)",
+    }
   },
-  messageDisplay: {
-    marginLeft: theme.spacing.md,
+
+  avatarIcon: {
+    height: "1rem",
+    width: "1rem",
+    color: theme.colors.primary[4],
   },
-  messageWrapper: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
+
+  messageContent: {
+    fontSize: theme.fontSizes.sm,
+    wordWrap: "break-word",
+    display: "block",
+    width: "60ch",
+    lineHeight: 1.5,
+    color: theme.colors.primary[9],
+    //paddingTop: theme.spacing.xs,
+    paddingBottom: theme.spacing.sm,
+    paddingLeft: theme.spacing.sm,
+    paddingRight: theme.spacing.sm,
   },
-  topOfMessage: {
-    alignSelf: "start",
-    marginTop: theme.spacing.sm,
-  },
+
 }));
 
 export default function ChatDisplay({ message }: { message: Message }) {
   const { classes, cx } = useStyles();
-
-  const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
-
-  const handleMainAction = (message: Message) => {
-    if (message.role === "assistant") {
-      regenerateAssistantMessage(message);
-    } else {
-      setEditingMessage(message);
-    }
-  };
 
   return (
     <div
@@ -119,49 +106,74 @@ export default function ChatDisplay({ message }: { message: Message }) {
           : classes.botMessageContainer
       )}
     >
-      <div
-        className={cx(
-          classes.message,
-          message.role === "user" ? classes.userMessage : classes.botMessage
-        )}
+      <Flex
+        direction={"row"}
+        justify="space-between"
+        w="100%"
+        pt="xxs"
+        px="xs"
+        align="center"
       >
-        <div className={classes.messageWrapper}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-              <div className={classes.topOfMessage}>
-                <Avatar size="sm">
-                  {message.role === "system" ? (
-                    <IconSettings />
-                  ) : message.role === "assistant" ? (
-                    <AssistantIcon width={px("1.5rem")} height={px("1.5rem")} />
-                  ) : (
-                    <UserIcon width={px("1.5rem")} height={px("1.5rem")} />
-                  )}
-                </Avatar>
-              </div>
-            </MediaQuery>
+        {
+          //<Avatar size="sm" radius="md" my="xxs" mr="xs" variant="light">
+        }
+        <Box sx={{ flex: 1 }}>
 
-            <MessageDisplay
-              message={message}
-              className={classes.messageDisplay}
-            />
-          </div>
-          {!(message.role !== "assistant" && pushToTalkMode) && (
-            <ActionIcon
-              className={cx(classes.actionIcon, classes.topOfMessage)}
-              onClick={() => handleMainAction(message)}
-              color="gray"
-            >
-              {message.role === "assistant" ? <IconRepeat /> : <IconEdit />}
-            </ActionIcon>
+
+          <CopyButton value={message.content} >
+            {({ copied, copy }) =>
+              copied ? (
+                <IconCheck className={classes.toolBarIcon} />
+              ) : (
+                <IconCopy className={classes.toolBarIcon} onClick={copy} />
+              )
+            }
+          </CopyButton>
+        </Box>
+        <Box sx={{ flex: 1, textAlign: "center" }}>
+          {message.role === "system" ? (
+            <IconSettings className={classes.avatarIcon} />
+          ) : message.role === "assistant" ? (
+            <IconRobot className={classes.avatarIcon} />
+          ) : (
+            <IconUser className={classes.avatarIcon} />
           )}
-        </div>
+        </Box>
+        {
+          //</Avatar>
+        }
+        <Flex gap="xs" justify="end" sx={{ flex: 1 }}>
+          {message.role === "assistant" ? (
+            <Tooltip label="Resubmit" withArrow>
+              <IconRepeat
+                className={classes.toolBarIcon}
+                onClick={() => regenerateAssistantMessage(message)}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip label="Edit & submit" withArrow>
+              <IconPencil
+                className={classes.toolBarIcon}
+                onClick={() => setEditingMessage(message)}
+              />
+            </Tooltip>
+          )}
+
+
+          <Tooltip label="Delete message" withArrow>
+
+            <IconX
+              className={classes.toolBarIcon}
+              onClick={() => delMessage(message)}
+            />
+          </Tooltip>
+
+
+        </Flex>
+      </Flex>
+      <div className={classes.messageContent}>
+        <MessageDisplay message={message} />
       </div>
-    </div>
+    </div >
   );
 }

@@ -22,9 +22,7 @@ import groupChatsByDate, { defaultDateGroups } from "./groupChatsByDate";
 const useStyles = createStyles((theme) => ({
   chatHistoryContainer: {
     overflowY: "scroll",
-    overflowX: "visible",
     maskImage: "linear-gradient(to bottom, black 95%, transparent 100%)",
-    maxHeight: "100%",
     paddingTop: theme.spacing.xxs,
     paddingBottom: theme.spacing.xxs,
 
@@ -97,7 +95,7 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     ref: getStylesRef("linkActive"),
-    backgroundColor: theme.colors.primary[1],
+    backgroundColor: theme.colors.primary[2],
     [`& > .${getStylesRef("chatLinkText")}`]: {
       color: theme.colors.primary[8],
       fontWeight: 600,

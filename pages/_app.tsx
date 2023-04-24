@@ -6,6 +6,7 @@ import {
   ColorSchemeProvider,
   Flex,
   MantineProvider,
+  ScrollArea,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import "highlight.js/styles/stackoverflow-dark.css";
@@ -86,6 +87,7 @@ export default function App(props: AppProps) {
 
   const light = [
     "#f2f2f2",
+    "#EBEBEB",
     "#d9d9d9",
     "#bfbfbf",
     "#a6a6a6",
@@ -160,16 +162,23 @@ export default function App(props: AppProps) {
           <AppShell
             padding={0}
             navbar={<Nav />}
-            layout="alt"
+            //layout="alt"
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
           >
-            <Flex direction={"column"} h={"100%"}>
-              <MuHeader />
+
+            <Flex direction={"column"} h={"100vh"} justify="space-between" >
+              {
+                //<MuHeader />
+              }
+
+
               <Component {...pageProps} />
+
 
               {apiKey && <ChatInputCluster />}
             </Flex>
+
             {playerMode && <AudioPlayer />}
           </AppShell>
         </MantineProvider>

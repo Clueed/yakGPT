@@ -1,40 +1,24 @@
 import { useEffect, useState } from "react";
 import {
-  ActionIcon,
   createStyles,
-  getStylesRef,
-  MantineTheme,
-  px,
+  Flex, MantineTheme
 } from "@mantine/core";
 import { useChatStore } from "@/stores/ChatStore";
-import NewChat from "../NewChat";
 
 import ChatMessage from "./ChatMessage";
-import { IconChevronsDown } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { setActiveChatId } from "@/stores/ChatActions";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
+
   container: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-
-    
-
-    [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      paddingBottom: "5em",
-    },
+    marginLeft: theme.spacing.sm,
+    marginRight: theme.spacing.sm,
+    marginTop: theme.spacing.sm,
+    overflow: "scroll",
   },
-  chatContainer: {
-    overflowY: "scroll",
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
-    gap: theme.spacing.md,
-  },
-  
-  
+
+
 }));
 
 const ChatDisplay = () => {
@@ -51,7 +35,6 @@ const ChatDisplay = () => {
 
   const activeChat = chats.find((chat) => chat.id === activeChatId);
 
-  const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
   const lastMessage = activeChat?.messages[activeChat.messages.length - 1];
 
   const scrolledToBottom = () => {
@@ -89,34 +72,18 @@ const ChatDisplay = () => {
   };
 
   return (
-    <div
-      className={classes.container}
-      style={{ paddingBottom: pushToTalkMode ? "7em" : "5em" }}
-    >
-      <div className={classes.chatContainer}>
-        
 
-        {!activeChatId && <NewChat />}
-        {activeChat?.messages.map((message, idx) => (
+
+    <div className={classes.container}>
+      <Flex direction={"column"} gap="xs" pb={"xs"} align="center">
+
+        {activeChat?.messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
-      </div>
-      {!isScrolledToBottom && (
-        <ActionIcon
-          size={32}
-          radius="xl"
-          variant="light"
-          onClick={scrollToBottom}
-          sx={{
-            position: "fixed",
-            right: theme.spacing.md,
-            bottom: 100,
-          }}
-        >
-          <IconChevronsDown size={px("1.1rem")} stroke={1.5} />
-        </ActionIcon>
-      )}
+      </Flex>
     </div>
+
+
   );
 };
 
