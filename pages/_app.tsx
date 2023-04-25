@@ -166,15 +166,12 @@ export default function App(props: AppProps) {
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
           >
-
-            <Flex direction={"column"} h={"100vh"} justify="space-between" >
+            <Flex direction={"column"} h={"100vh"} justify="space-between">
               {
                 //<MuHeader />
               }
 
-
               <Component {...pageProps} />
-
 
               {apiKey && <ChatInputCluster />}
             </Flex>

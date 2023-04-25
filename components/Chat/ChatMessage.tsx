@@ -65,7 +65,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   toolBarIcon: {
     height: "1rem",
     width: "1rem",
-    color: theme.colors.primary[5],
+    color: theme.colors.primary[3],
     transition: "transform 0.2s ease-in-out",
     "&:hover": {
       color: theme.colors.primary[9],
@@ -76,14 +76,14 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   avatarIcon: {
     height: "1rem",
     width: "1rem",
-    color: theme.colors.primary[4],
+    color: theme.colors.primary[3],
   },
 
   messageContent: {
     fontSize: theme.fontSizes.sm,
     wordWrap: "break-word",
     display: "block",
-    width: "60ch",
+    maxWidth: "60ch",
     lineHeight: 1.5,
     color: theme.colors.primary[9],
     //paddingTop: theme.spacing.xs,

@@ -4,6 +4,6 @@ import { useChatStore } from "@/stores/ChatStore";
 
 export default function Home() {
   const apiKey = useChatStore((state) => state.apiKey);
-  
+
   return apiKey ? <ChatDisplay /> : <Hero />;
 }

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  createStyles,
-  Flex, MantineTheme
-} from "@mantine/core";
+import { createStyles, Flex, MantineTheme } from "@mantine/core";
 import { useChatStore } from "@/stores/ChatStore";
 
 import ChatMessage from "./ChatMessage";
@@ -10,15 +7,12 @@ import { useRouter } from "next/router";
 import { setActiveChatId } from "@/stores/ChatActions";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
-
   container: {
     marginLeft: theme.spacing.sm,
     marginRight: theme.spacing.sm,
     marginTop: theme.spacing.sm,
     overflow: "scroll",
   },
-
-
 }));
 
 const ChatDisplay = () => {
@@ -72,18 +66,13 @@ const ChatDisplay = () => {
   };
 
   return (
-
-
     <div className={classes.container}>
       <Flex direction={"column"} gap="xs" pb={"xs"} align="center">
-
         {activeChat?.messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
       </Flex>
     </div>
-
-
   );
 };
 

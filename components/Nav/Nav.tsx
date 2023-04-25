@@ -73,12 +73,14 @@ export default function NavbarSimple() {
       sx={{ zIndex: 1001 }}
       withBorder={false}
     >
-      <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-        <Space h="xl" />
-      </MediaQuery>
       <Navbar.Section>
         <Link href={"/"} passHref style={{ textDecoration: "none" }}>
-          <Button variant="light" fullWidth leftIcon={<IconPlus />}>
+          <Button
+            variant="filled"
+            fullWidth
+            leftIcon={<IconPlus />}
+            color="primary.4"
+          >
             New Chat
           </Button>
         </Link>

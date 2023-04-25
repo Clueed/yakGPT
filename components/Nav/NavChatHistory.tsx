@@ -146,7 +146,6 @@ export default function NavChatHistory() {
   const [editChatsHistory, setEditChatsHistory] = useState(false);
 
   if (chats.length === 0) {
-    setEditChatsHistory(false);
     return null;
   }
 
