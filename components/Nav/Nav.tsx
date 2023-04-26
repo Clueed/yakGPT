@@ -4,9 +4,7 @@ import {
   ActionIcon,
   Button,
   Group,
-  MediaQuery,
   Navbar,
-  Space,
   Tooltip,
   createStyles,
   useMantineColorScheme,
@@ -21,7 +19,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import SettingsModal from "../Settings/SettingsModal";
-import NavChatHistory from "./NavChatHistory";
+import { NavChatHistory } from "./NavChatHistory";
 import KeyModal from "../Settings/KeyModal";
 
 const useStyles = createStyles((theme) => ({
