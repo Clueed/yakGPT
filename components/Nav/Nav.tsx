@@ -19,8 +19,10 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import SettingsModal from "../Settings/SettingsModal";
-import { NavChatHistory } from "./NavChatHistory";
 import KeyModal from "../Settings/KeyModal";
+import { lazy } from "react";
+
+const NavChatHistory = lazy(() => import("./NavChatHistory"));
 
 const useStyles = createStyles((theme) => ({
   secondaryButton: {

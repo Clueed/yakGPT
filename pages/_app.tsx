@@ -6,7 +6,6 @@ import {
   ColorSchemeProvider,
   Flex,
   MantineProvider,
-  ScrollArea,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import "highlight.js/styles/stackoverflow-dark.css";
@@ -14,11 +13,12 @@ import "highlight.js/styles/stackoverflow-dark.css";
 import { useChatStore } from "@/stores/ChatStore";
 
 import Nav from "@/components/Nav/Nav";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import ChatInputCluster from "@/components/InputCluster/InputCluster";
 import { setColorScheme } from "@/stores/ChatActions";
-import ElevenLabsPlayer from "@/components/ElevenLabsPlayer";
-import AzurePlayer from "@/components/AzurePlayer";
+
+const ElevenLabsPlayer = lazy(() => import("@/components/ElevenLabsPlayer"));
+const AzurePlayer = lazy(() => import("@/components/AzurePlayer"));
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   require("../mocks");
@@ -29,13 +29,8 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
 }
 
 import { Tuple, DefaultMantineColor } from "@mantine/core";
-import Hero from "@/components/Hero";
-import MuHeader from "@/components/MuHeader";
 
-type ExtendedCustomColors =
-  | "primary"
-  //| "secondaryColorName"
-  | DefaultMantineColor;
+type ExtendedCustomColors = "primary" | DefaultMantineColor;
 
 declare module "@mantine/core" {
   export interface MantineThemeColorsOverride {

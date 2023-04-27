@@ -12,7 +12,13 @@ import { useMediaQuery } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({}));
 
-export default function ChatHistoryEditButton({ editMode, setEditMode }) {
+export default function ChatHistoryEditButton({
+  editMode,
+  setEditMode,
+}: {
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+}) {
   const { theme } = useStyles();
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 

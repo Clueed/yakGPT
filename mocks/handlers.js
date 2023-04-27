@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { rest } from "msw";
 import modelsJSON from "./models.json";
 import { chatCompletionStreamGenerator } from "./chatCompletionGenerator";
@@ -7,7 +9,7 @@ import { faker } from "@faker-js/faker";
 function handleOpenAiApiRequest(
   res,
   ctx,
-  paramPrefix: string,
+  paramPrefix,
   defaultResponse
 ) {
   const pageParams = new URLSearchParams(window.location.search);

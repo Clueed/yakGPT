@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   ThemeIcon,
+  MantineTheme,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";

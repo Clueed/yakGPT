@@ -1,6 +1,5 @@
 import { useChatStore } from "@/stores/ChatStore";
 import { Box, Flex, Text, createStyles } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import ChatHistoryEditButton from "./ChatHistoryEditButton";
 import { EditTitleModal } from "./EditTitleModal";
@@ -61,7 +60,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function NavChatHistory() {
+export default function NavChatHistory() {
   const { classes, theme } = useStyles();
 
   const chats = useChatStore((state) => state.chats);

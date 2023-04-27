@@ -9,7 +9,6 @@ export function EditTitleModal({
   editingChat,
   setEditingChat,
 }: {
-  opened: boolean;
   editingChat: Chat | undefined;
   setEditingChat: (chat: Chat | undefined) => void;
 }) {

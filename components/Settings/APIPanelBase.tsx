@@ -100,6 +100,7 @@ export function APIPanelBase({ config }: { config: ApiPanelConfig }) {
           const Icon = usageMap[u].icon;
           return (
             <Badge
+              key={u}
               size="md"
               p="sm"
               color="primary.6"

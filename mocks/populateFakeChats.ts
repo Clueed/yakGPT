@@ -9,7 +9,7 @@ export function generateFakeChats(chatsCount: number): Chat[] {
   for (let i = 0; i < chatsCount; i++) {
     const id = uuidv4();
     const title = faker.lorem.words(3);
-    const createdAt = faker.date.past().toString();
+    const createdAt = faker.date.past();
 
     const content = (): string => {
       return faker.lorem.paragraphs(Math.floor(Math.random() * 5));
