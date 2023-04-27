@@ -16,7 +16,7 @@ import {
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
-import MessageDisplay from "../MessageDisplay";
+import MessageDisplay from "./MessageDisplay";
 
 import { Message } from "@/stores/Message";
 import {

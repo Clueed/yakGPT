@@ -101,7 +101,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-export default ({ message }: { message: Message }) => {
+export default function MessageDisplay({ message }: { message: Message }) {
   const { classes, cx } = useStyles();
 
   const htmlString = () => {
