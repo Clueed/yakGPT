@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -49,6 +50,7 @@
     "@types/markdown-it": "^12.2.3",
     "@types/recordrtc": "^5.6.10",
     "@types/uuid": "^9.0.1",
+    "cross-env": "^7.0.3",
     "msw": "^1.2.1"
   },
   "msw": {
