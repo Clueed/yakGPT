@@ -34,10 +34,18 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
   },
   message: {
+    wordWrap: "break-word",
+    lineHeight: 1.5,
+    color: theme.colors.primary[9],
+    paddingTop: theme.spacing.xs,
+    paddingBottom: theme.spacing.sm,
+    paddingLeft: theme.spacing.sm,
+    paddingRight: theme.spacing.sm,
     "& pre": {
       overflowX: "scroll",
     },
     "& p": {
+      wordWrap: "break-word",
       margin: 0,
     },
     "& table": {
@@ -57,10 +65,11 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
     "& th, & td": {
       padding: theme.spacing.xs,
-      border: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[8]
-        : theme.colors.gray[3]
-        }`,
+      border: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[8]
+          : theme.colors.gray[3]
+      }`,
       textAlign: "left",
       fontWeight: theme.colorScheme === "dark" ? 300 : 400,
       color:
@@ -101,7 +110,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-export default function MessageDisplay({ message }: { message: Message }) {
+export default function ChatMessageContent({ message }: { message: Message }) {
   const { classes, cx } = useStyles();
 
   const htmlString = () => {
@@ -129,4 +138,4 @@ export default function MessageDisplay({ message }: { message: Message }) {
       dangerouslySetInnerHTML={{ __html: htmlString() }}
     ></div>
   );
-};
+}

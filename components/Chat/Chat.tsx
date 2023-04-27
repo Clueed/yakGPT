@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createStyles, Flex, MantineTheme } from "@mantine/core";
+import { createStyles, Flex, MantineTheme, ScrollArea } from "@mantine/core";
 import { useChatStore } from "@/stores/ChatStore";
 
 import ChatMessage from "./ChatMessage";
@@ -7,15 +7,16 @@ import { useRouter } from "next/router";
 import { setActiveChatId } from "@/stores/ChatActions";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
-  container: {
-    marginLeft: theme.spacing.sm,
-    marginRight: theme.spacing.sm,
-    marginTop: theme.spacing.sm,
-    overflow: "scroll",
+  grid: {
+    fontSize: theme.fontSizes.md,
+    display: "grid",
+    gridTemplateColumns: "1fr auto minmax(0, 75ch) auto 1fr",
+    columnGap: theme.spacing.xxs,
+    rowGap: theme.spacing.md,
   },
 }));
 
-const ChatDisplay = () => {
+export default function Chat() {
   const router = useRouter();
   const activeChatId = router.query.chatId as string | undefined;
 
@@ -66,14 +67,12 @@ const ChatDisplay = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <Flex direction={"column"} gap="xs" pb={"xs"} align="center">
+    <ScrollArea>
+      <div className={classes.grid}>
         {activeChat?.messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
-      </Flex>
-    </div>
+      </div>
+    </ScrollArea>
   );
-};
-
-export default ChatDisplay;
+}

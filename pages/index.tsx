@@ -1,4 +1,4 @@
-import ChatDisplay from "@/components/Chat/ChatDisplay";
+import ChatDisplay from "@/components/Chat/Chat";
 import Hero from "@/components/Hero";
 import { useChatStore } from "@/stores/ChatStore";
 

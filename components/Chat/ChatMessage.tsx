@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   CopyButton,
   createStyles,
@@ -16,7 +17,7 @@ import {
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
-import MessageDisplay from "./MessageDisplay";
+import MessageDisplay from "./ChatMessageContent";
 
 import { Message } from "@/stores/Message";
 import {
@@ -34,12 +35,8 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     justifyContent: "center",
     alignItems: "start",
 
-    //paddingTop: theme.spacing.sm,
-    //paddingBottom: theme.spacing.sm,
-    //paddingLeft: theme.spacing.sm,
-    //paddingRight: theme.spacing.sm,
+    gridColumn: 3,
 
-    fontSize: theme.fontSizes.sm,
     borderRadius: theme.radius.sm,
     overflow: "hidden",
     maxWidth: "100%",
@@ -49,10 +46,10 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
   },
 
-  userMessageContainer: {
+  userBg: {
     backgroundColor: theme.colors.primary[0],
   },
-  botMessageContainer: {
+  botBg: {
     backgroundColor: theme.colors.primary[1],
   },
 
@@ -78,96 +75,41 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     width: "1rem",
     color: theme.colors.primary[3],
   },
-
-  messageContent: {
-    fontSize: theme.fontSizes.sm,
-    wordWrap: "break-word",
-    display: "block",
-    maxWidth: "60ch",
-    lineHeight: 1.5,
-    color: theme.colors.primary[9],
-    //paddingTop: theme.spacing.xs,
-    paddingBottom: theme.spacing.sm,
-    paddingLeft: theme.spacing.sm,
-    paddingRight: theme.spacing.sm,
-  },
 }));
 
-export default function ChatDisplay({ message }: { message: Message }) {
+export default function ChatMessage({ message }: { message: Message }) {
   const { classes, cx } = useStyles();
 
   return (
-    <div
-      key={message.id}
-      className={cx(
-        classes.messageContainer,
-        message.role === "user"
-          ? classes.userMessageContainer
-          : classes.botMessageContainer
-      )}
-    >
-      <Flex
-        direction={"row"}
-        justify="space-between"
-        w="100%"
-        pt="xxs"
-        px="xs"
-        align="center"
-      >
-        {
-          //<Avatar size="sm" radius="md" my="xxs" mr="xs" variant="light">
-        }
-        <Box sx={{ flex: 1 }}>
-          <CopyButton value={message.content}>
-            {({ copied, copy }) =>
-              copied ? (
-                <IconCheck className={classes.toolBarIcon} />
-              ) : (
-                <IconCopy className={classes.toolBarIcon} onClick={copy} />
-              )
-            }
-          </CopyButton>
-        </Box>
-        <Box sx={{ flex: 1, textAlign: "center" }}>
+    <>
+      {["system", "assistant"].includes(message.role) && (
+        <Avatar radius="md" size="sm" color="primary.1" sx={{ gridColumn: 2 }}>
           {message.role === "system" ? (
             <IconSettings className={classes.avatarIcon} />
-          ) : message.role === "assistant" ? (
+          ) : (
             <IconRobot className={classes.avatarIcon} />
-          ) : (
-            <IconUser className={classes.avatarIcon} />
           )}
-        </Box>
-        {
-          //</Avatar>
-        }
-        <Flex gap="xs" justify="end" sx={{ flex: 1 }}>
-          {message.role === "assistant" ? (
-            <Tooltip label="Resubmit" withArrow>
-              <IconRepeat
-                className={classes.toolBarIcon}
-                onClick={() => regenerateAssistantMessage(message)}
-              />
-            </Tooltip>
-          ) : (
-            <Tooltip label="Edit & submit" withArrow>
-              <IconPencil
-                className={classes.toolBarIcon}
-                onClick={() => setEditingMessage(message)}
-              />
-            </Tooltip>
-          )}
-
-          <Tooltip label="Delete message" withArrow>
-            <IconX
-              className={classes.toolBarIcon}
-              onClick={() => delMessage(message)}
-            />
-          </Tooltip>
-        </Flex>
-      </Flex>
-      <div className={classes.messageContent}>
+        </Avatar>
+      )}
+      <div
+        className={cx(
+          classes.messageContainer,
+          message.role === "user" ? classes.userBg : classes.botBg
+        )}
+      >
         <MessageDisplay message={message} />
       </div>
-    </div>
+      {message.role === "user" && (
+        <Avatar
+          radius="md"
+          size="sm"
+          color="primary.0"
+          sx={{ gridColumn: 4 }}
+          className={classes.userBg}
+        >
+          <IconUser className={classes.avatarIcon} />
+        </Avatar>
+      )}
+    </>
   );
 }
