@@ -140,7 +140,7 @@ export default function SettingsModal({
     return acc;
   }, {} as Record<string, string>);
 
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Modal opened={opened} onClose={onClose} title="Settings" zIndex={9999}>
@@ -167,13 +167,7 @@ export default function SettingsModal({
             </Tabs.Tab>
           </Tabs.List>
 
-          <ScrollArea.Autosize
-            type="hover"
-            offsetScrollbars
-            //h="100%"
-            mah={"70vh"}
-            //sx={{ maxHeight: "70vh" }}
-          >
+          <ScrollArea.Autosize type="hover" offsetScrollbars mah={"70vh"}>
             <form
               onSubmit={form.onSubmit((values) => {
                 updateSettingsForm(values);
@@ -195,7 +189,7 @@ export default function SettingsModal({
                       label: model,
                       value: model,
                     }))}
-                  ></Select>
+                  />
                   <label>
                     <Text size="sm">Sampling temperature</Text>
                     <Slider

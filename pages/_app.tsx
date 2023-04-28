@@ -100,7 +100,7 @@ export default function App(props: AppProps) {
     colorScheme === "light" ? light[2] : dark[2], // 2
     colorScheme === "light" ? light[3] : dark[3], // 3
     colorScheme === "light" ? light[4] : dark[3], // 4
-    colorScheme === "light" ? light[5] : dark[3], // 5
+    colorScheme === "light" ? light[5] : dark[2], // 5
     colorScheme === "light" ? light[6] : dark[2], // 6
     colorScheme === "light" ? light[7] : dark[7], // 7
     colorScheme === "light" ? light[8] : dark[1], // 8

@@ -1,3 +1,4 @@
+import NavSettingsCluster from "./NavSettingsCluster";
 import { setNavOpened } from "@/stores/ChatActions";
 import { useChatStore } from "@/stores/ChatStore";
 import {
@@ -84,6 +85,10 @@ export default function NavbarSimple() {
             New Chat
           </Button>
         </Link>
+      </Navbar.Section>
+
+      <Navbar.Section>
+        <NavSettingsCluster />
       </Navbar.Section>
 
       <Navbar.Section grow mt="md" mb="xxs" sx={{ overflowY: "hidden" }}>

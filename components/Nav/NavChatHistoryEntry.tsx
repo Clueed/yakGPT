@@ -45,7 +45,10 @@ const useStyles = createStyles((theme) => ({
     ref: getStylesRef("linkActive"),
     backgroundColor: theme.colors.primary[2],
     [`& > .${getStylesRef("chatLinkText")}`]: {
-      color: theme.colors.primary[9],
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[9]
+          : theme.colors.primary[9],
       fontWeight: 600,
     },
   },
@@ -66,6 +69,11 @@ const useStyles = createStyles((theme) => ({
       fontSize: theme.fontSizes.xl,
       lineHeight: "40px", // depends on icons
     },
+  },
+
+  icon: {
+    strokeWidth: 1.9,
+    color: theme.colors.primary[8],
   },
 }));
 
@@ -115,14 +123,7 @@ export function NavChatHistoryEntry({
                 }
               }}
             >
-              <IconX
-                stroke={1.5}
-                color={
-                  theme.colorScheme === "dark"
-                    ? theme.colors.red[3]
-                    : theme.colors.red[8]
-                }
-              />
+              <IconX className={classes.icon} />
             </ActionIcon>
           )}
 
@@ -139,7 +140,7 @@ export function NavChatHistoryEntry({
                 setEditingChat(chat);
               }}
             >
-              <IconPencil stroke={1.5} color={theme.colors.primary[2]} />
+              <IconPencil className={classes.icon} />
             </ActionIcon>
           )}
         </Flex>

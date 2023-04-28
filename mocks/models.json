@@ -2,7 +2,7 @@
     "object": "list",
     "data": [
         {
-            "id": "babbage_test",
+            "id": "babbage",
             "object": "model",
             "created": 1649358449,
             "owned_by": "openai",
@@ -26,7 +26,7 @@
             "parent": null
         },
         {
-            "id": "text-davinci-003_test",
+            "id": "text-davinci-003",
             "object": "model",
             "created": 1669599635,
             "owned_by": "openai-internal",
@@ -50,7 +50,7 @@
             "parent": null
         },
         {
-            "id": "davinci_test",
+            "id": "davinci",
             "object": "model",
             "created": 1649359874,
             "owned_by": "openai",
@@ -74,7 +74,7 @@
             "parent": null
         },
         {
-            "id": "text-davinci-edit-001_test",
+            "id": "text-davinci-edit-001",
             "object": "model",
             "created": 1649809179,
             "owned_by": "openai",
@@ -98,7 +98,7 @@
             "parent": null
         },
         {
-            "id": "babbage-code-search-code_test",
+            "id": "babbage-code-search-code",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -122,7 +122,7 @@
             "parent": null
         },
         {
-            "id": "text-similarity-babbage-001_test",
+            "id": "text-similarity-babbage-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -146,7 +146,7 @@
             "parent": null
         },
         {
-            "id": "code-davinci-edit-001_test",
+            "id": "code-davinci-edit-001",
             "object": "model",
             "created": 1649880484,
             "owned_by": "openai",
@@ -170,7 +170,7 @@
             "parent": null
         },
         {
-            "id": "text-davinci-001_test",
+            "id": "text-davinci-001",
             "object": "model",
             "created": 1649364042,
             "owned_by": "openai",
@@ -194,7 +194,7 @@
             "parent": null
         },
         {
-            "id": "ada_test",
+            "id": "ada",
             "object": "model",
             "created": 1649357491,
             "owned_by": "openai",
@@ -218,7 +218,7 @@
             "parent": null
         },
         {
-            "id": "babbage-code-search-text_test",
+            "id": "babbage-code-search-text",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -242,7 +242,7 @@
             "parent": null
         },
         {
-            "id": "babbage-similarity_test",
+            "id": "babbage-similarity",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -266,7 +266,7 @@
             "parent": null
         },
         {
-            "id": "whisper-1_test",
+            "id": "whisper-1",
             "object": "model",
             "created": 1677532384,
             "owned_by": "openai-internal",
@@ -290,7 +290,7 @@
             "parent": null
         },
         {
-            "id": "code-search-babbage-text-001_test",
+            "id": "code-search-babbage-text-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -314,7 +314,7 @@
             "parent": null
         },
         {
-            "id": "text-curie-001_test",
+            "id": "text-curie-001",
             "object": "model",
             "created": 1649364043,
             "owned_by": "openai",
@@ -338,7 +338,7 @@
             "parent": null
         },
         {
-            "id": "code-search-babbage-code-001_test",
+            "id": "code-search-babbage-code-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -362,7 +362,7 @@
             "parent": null
         },
         {
-            "id": "text-ada-001_test",
+            "id": "text-ada-001",
             "object": "model",
             "created": 1649364042,
             "owned_by": "openai",
@@ -386,7 +386,7 @@
             "parent": null
         },
         {
-            "id": "text-embedding-ada-002_test",
+            "id": "text-embedding-ada-002",
             "object": "model",
             "created": 1671217299,
             "owned_by": "openai-internal",
@@ -410,7 +410,7 @@
             "parent": null
         },
         {
-            "id": "text-similarity-ada-001_test",
+            "id": "text-similarity-ada-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -434,7 +434,7 @@
             "parent": null
         },
         {
-            "id": "curie-instruct-beta_test",
+            "id": "curie-instruct-beta",
             "object": "model",
             "created": 1649364042,
             "owned_by": "openai",
@@ -458,7 +458,7 @@
             "parent": null
         },
         {
-            "id": "ada-code-search-code_test",
+            "id": "ada-code-search-code",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -482,7 +482,7 @@
             "parent": null
         },
         {
-            "id": "ada-similarity_test",
+            "id": "ada-similarity",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -506,7 +506,7 @@
             "parent": null
         },
         {
-            "id": "code-search-ada-text-001_test",
+            "id": "code-search-ada-text-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -530,7 +530,7 @@
             "parent": null
         },
         {
-            "id": "text-search-ada-query-001_test",
+            "id": "text-search-ada-query-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -554,7 +554,7 @@
             "parent": null
         },
         {
-            "id": "davinci-search-document_test",
+            "id": "davinci-search-document",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -578,7 +578,7 @@
             "parent": null
         },
         {
-            "id": "ada-code-search-text_test",
+            "id": "ada-code-search-text",
             "object": "model",
             "created": 1651172510,
             "owned_by": "openai-dev",
@@ -602,7 +602,7 @@
             "parent": null
         },
         {
-            "id": "text-search-ada-doc-001_test",
+            "id": "text-search-ada-doc-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -626,7 +626,7 @@
             "parent": null
         },
         {
-            "id": "davinci-instruct-beta_test",
+            "id": "davinci-instruct-beta",
             "object": "model",
             "created": 1649364042,
             "owned_by": "openai",
@@ -650,7 +650,7 @@
             "parent": null
         },
         {
-            "id": "text-similarity-curie-001_test",
+            "id": "text-similarity-curie-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -674,7 +674,7 @@
             "parent": null
         },
         {
-            "id": "code-search-ada-code-001_test",
+            "id": "code-search-ada-code-001",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -698,7 +698,7 @@
             "parent": null
         },
         {
-            "id": "ada-search-query_test",
+            "id": "ada-search-query",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -722,7 +722,7 @@
             "parent": null
         },
         {
-            "id": "text-search-davinci-query-001_test",
+            "id": "text-search-davinci-query-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -746,7 +746,7 @@
             "parent": null
         },
         {
-            "id": "curie-search-query_test",
+            "id": "curie-search-query",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -770,7 +770,7 @@
             "parent": null
         },
         {
-            "id": "gpt-3.5-turbo-0301_test",
+            "id": "gpt-3.5-turbo-0301",
             "object": "model",
             "created": 1677649963,
             "owned_by": "openai",
@@ -794,7 +794,7 @@
             "parent": null
         },
         {
-            "id": "davinci-search-query_test",
+            "id": "davinci-search-query",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -818,7 +818,7 @@
             "parent": null
         },
         {
-            "id": "babbage-search-document_test",
+            "id": "babbage-search-document",
             "object": "model",
             "created": 1651172510,
             "owned_by": "openai-dev",
@@ -842,7 +842,7 @@
             "parent": null
         },
         {
-            "id": "ada-search-document_test",
+            "id": "ada-search-document",
             "object": "model",
             "created": 1651172507,
             "owned_by": "openai-dev",
@@ -866,7 +866,7 @@
             "parent": null
         },
         {
-            "id": "text-search-curie-query-001_test",
+            "id": "text-search-curie-query-001",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -890,7 +890,7 @@
             "parent": null
         },
         {
-            "id": "text-search-babbage-doc-001_test",
+            "id": "text-search-babbage-doc-001",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -914,7 +914,7 @@
             "parent": null
         },
         {
-            "id": "gpt-3.5-turbo_test",
+            "id": "gpt-3.5-turbo",
             "object": "model",
             "created": 1677610602,
             "owned_by": "openai",
@@ -938,7 +938,7 @@
             "parent": null
         },
         {
-            "id": "curie-search-document_test",
+            "id": "curie-search-document",
             "object": "model",
             "created": 1651172508,
             "owned_by": "openai-dev",
@@ -962,7 +962,7 @@
             "parent": null
         },
         {
-            "id": "text-search-curie-doc-001_test",
+            "id": "text-search-curie-doc-001",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -986,7 +986,7 @@
             "parent": null
         },
         {
-            "id": "babbage-search-query_test",
+            "id": "babbage-search-query",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -1010,7 +1010,7 @@
             "parent": null
         },
         {
-            "id": "text-babbage-001_test",
+            "id": "text-babbage-001",
             "object": "model",
             "created": 1649364043,
             "owned_by": "openai",
@@ -1034,7 +1034,7 @@
             "parent": null
         },
         {
-            "id": "text-search-davinci-doc-001_test",
+            "id": "text-search-davinci-doc-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -1058,7 +1058,7 @@
             "parent": null
         },
         {
-            "id": "text-search-babbage-query-001_test",
+            "id": "text-search-babbage-query-001",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -1082,7 +1082,7 @@
             "parent": null
         },
         {
-            "id": "curie-similarity_test",
+            "id": "curie-similarity",
             "object": "model",
             "created": 1651172510,
             "owned_by": "openai-dev",
@@ -1106,7 +1106,7 @@
             "parent": null
         },
         {
-            "id": "curie_test",
+            "id": "curie",
             "object": "model",
             "created": 1649359874,
             "owned_by": "openai",
@@ -1130,7 +1130,7 @@
             "parent": null
         },
         {
-            "id": "text-similarity-davinci-001_test",
+            "id": "text-similarity-davinci-001",
             "object": "model",
             "created": 1651172505,
             "owned_by": "openai-dev",
@@ -1154,7 +1154,7 @@
             "parent": null
         },
         {
-            "id": "text-davinci-002_test",
+            "id": "text-davinci-002",
             "object": "model",
             "created": 1649880484,
             "owned_by": "openai",
@@ -1178,7 +1178,7 @@
             "parent": null
         },
         {
-            "id": "davinci-similarity_test",
+            "id": "davinci-similarity",
             "object": "model",
             "created": 1651172509,
             "owned_by": "openai-dev",
@@ -1202,7 +1202,7 @@
             "parent": null
         },
         {
-            "id": "cushman:2020-05-03_test",
+            "id": "cushman:2020-05-03",
             "object": "model",
             "created": 1590625110,
             "owned_by": "system",
@@ -1226,7 +1226,7 @@
             "parent": null
         },
         {
-            "id": "ada:2020-05-03_test",
+            "id": "ada:2020-05-03",
             "object": "model",
             "created": 1607631625,
             "owned_by": "system",
@@ -1250,7 +1250,7 @@
             "parent": null
         },
         {
-            "id": "babbage:2020-05-03_test",
+            "id": "babbage:2020-05-03",
             "object": "model",
             "created": 1607632611,
             "owned_by": "system",
@@ -1274,7 +1274,7 @@
             "parent": null
         },
         {
-            "id": "curie:2020-05-03_test",
+            "id": "curie:2020-05-03",
             "object": "model",
             "created": 1607632725,
             "owned_by": "system",
@@ -1298,7 +1298,7 @@
             "parent": null
         },
         {
-            "id": "davinci:2020-05-03_test",
+            "id": "davinci:2020-05-03",
             "object": "model",
             "created": 1607640163,
             "owned_by": "system",
@@ -1322,7 +1322,7 @@
             "parent": null
         },
         {
-            "id": "if-davinci-v2_test",
+            "id": "if-davinci-v2",
             "object": "model",
             "created": 1610745990,
             "owned_by": "openai",
@@ -1346,7 +1346,7 @@
             "parent": null
         },
         {
-            "id": "if-curie-v2_test",
+            "id": "if-curie-v2",
             "object": "model",
             "created": 1610745968,
             "owned_by": "openai",
@@ -1370,7 +1370,7 @@
             "parent": null
         },
         {
-            "id": "if-davinci:3.0.0_test",
+            "id": "if-davinci:3.0.0",
             "object": "model",
             "created": 1629420755,
             "owned_by": "openai",
@@ -1394,7 +1394,7 @@
             "parent": null
         },
         {
-            "id": "davinci-if:3.0.0_test",
+            "id": "davinci-if:3.0.0",
             "object": "model",
             "created": 1629498070,
             "owned_by": "openai",
@@ -1418,7 +1418,7 @@
             "parent": null
         },
         {
-            "id": "davinci-instruct-beta:2.0.0_test",
+            "id": "davinci-instruct-beta:2.0.0",
             "object": "model",
             "created": 1629501914,
             "owned_by": "openai",
@@ -1442,7 +1442,7 @@
             "parent": null
         },
         {
-            "id": "text-ada:001_test",
+            "id": "text-ada:001",
             "object": "model",
             "created": 1641949608,
             "owned_by": "system",
@@ -1466,7 +1466,7 @@
             "parent": null
         },
         {
-            "id": "text-davinci:001_test",
+            "id": "text-davinci:001",
             "object": "model",
             "created": 1641943966,
             "owned_by": "system",
@@ -1490,7 +1490,7 @@
             "parent": null
         },
         {
-            "id": "text-curie:001_test",
+            "id": "text-curie:001",
             "object": "model",
             "created": 1641955047,
             "owned_by": "system",
@@ -1514,7 +1514,7 @@
             "parent": null
         },
         {
-            "id": "text-babbage:001_test",
+            "id": "text-babbage:001",
             "object": "model",
             "created": 1642018370,
             "owned_by": "openai",

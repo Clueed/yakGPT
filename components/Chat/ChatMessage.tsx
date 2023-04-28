@@ -37,6 +37,11 @@ const useStyles = createStyles((theme: MantineTheme) => ({
 
     gridColumn: 3,
 
+    paddingTop: theme.spacing.xxs,
+    paddingBottom: theme.spacing.xxs,
+    paddingLeft: theme.spacing.xs,
+    paddingRight: theme.spacing.xs,
+
     borderRadius: theme.radius.sm,
     overflow: "hidden",
     maxWidth: "100%",

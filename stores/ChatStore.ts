@@ -22,7 +22,7 @@ export const excludeFromState = [
   "activeChatId",
 ];
 
-interface SettingsForm {
+export interface SettingsForm {
   // GPT
   model: string;
   temperature: number;
@@ -141,7 +141,7 @@ export const initialState = {
 import { generateFakeChats } from "@/mocks/populateFakeChats";
 
 if (process.env.NEXT_PUBLIC_FAKE_INITIAL_CHATS === "enabled") {
-  initialState.chats = generateFakeChats(50);
+  initialState.chats = generateFakeChats(200);
 }
 const store = () => ({ ...initialState } as ChatState);
 
