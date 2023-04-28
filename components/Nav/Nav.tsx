@@ -1,11 +1,7 @@
-import NavSettingsCluster from "./NavSettingsCluster";
 import {
   ActionIcon,
-  Box,
   Button,
   Flex,
-  Group,
-  MediaQuery,
   Navbar,
   Tooltip,
   createStyles,
@@ -14,8 +10,6 @@ import {
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
   IconBrandOpenai,
-  IconChevronLeft,
-  IconChevronRight,
   IconHistory,
   IconKey,
   IconMoon,
@@ -24,13 +18,20 @@ import {
   IconSun,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import SettingsModal from "../Settings/SettingsModal";
+import { useState } from "react";
 import KeyModal from "../Settings/KeyModal";
-import { lazy, useState } from "react";
-
-const NavChatHistory = lazy(() => import("./NavChatHistory"));
+import SettingsModal from "../Settings/SettingsModal";
+import NavChatHistory from "./NavChatHistory";
+import NavSettingsCluster from "./NavSettingsCluster";
+import { relative } from "path";
 
 const useStyles = createStyles((theme) => ({
+  navBar: {
+    transition: "background-color 0.5s ease-in-out",
+    "&:hover": {
+      backgroundColor: theme.colors.primary[0] + "40",
+    },
+  },
   secondaryButton: {
     color: theme.colors.primary[5],
 
@@ -67,21 +68,24 @@ export default function NavbarSimple() {
 
   const isSmall = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(isSmall);
 
   return (
     <>
       <Flex
+        className={classes.navBar}
         direction={"column"}
         h={"100vh"}
         p="xxs"
-        w={expanded === true ? "12rem" : "5rem"}
-        //align={"center"}
+        w={expanded ? "12rem" : "3rem"}
+        align={expanded ? "stretch" : "center"}
         justify={"space-between"}
+        gap="lg"
+        onClick={() => setExpanded(!expanded)}
       >
         <Navbar.Section>
           <Link href={"/"} passHref style={{ textDecoration: "none" }}>
-            {expanded === true ? (
+            {expanded ? (
               <Button
                 variant="filled"
                 fullWidth
@@ -98,38 +102,34 @@ export default function NavbarSimple() {
           </Link>
         </Navbar.Section>
 
-        <Navbar.Section>
-          {expanded === true ? (
-            <NavSettingsCluster />
-          ) : (
-            <ActionIcon
-              variant="transparent"
-              color="primary.2"
-              onClick={() => setExpanded(!expanded)}
-            >
+        {expanded ? (
+          <>
+            <Navbar.Section>
+              <NavSettingsCluster />
+            </Navbar.Section>
+            <Navbar.Section grow sx={{ overflowY: "hidden" }}>
+              <NavChatHistory />
+            </Navbar.Section>
+          </>
+        ) : (
+          <Navbar.Section grow>
+            <ActionIcon variant="subtle" color="primary.2">
               <IconBrandOpenai />
             </ActionIcon>
-          )}
-        </Navbar.Section>
-
-        {expanded === true ? (
-          <Navbar.Section grow mt="md" mb="xxs" sx={{ overflowY: "hidden" }}>
-            <NavChatHistory />
-          </Navbar.Section>
-        ) : (
-          <Navbar.Section>
-            <ActionIcon
-              variant="transparent"
-              color="primary.2"
-              onClick={() => setExpanded(!expanded)}
-            >
+            <ActionIcon mt="lg" variant="subtle" color="primary.2">
               <IconHistory />
             </ActionIcon>
           </Navbar.Section>
         )}
 
         <Navbar.Section>
-          <Group position="apart" mx="md">
+          <Flex
+            wrap="wrap-reverse"
+            justify="space-between"
+            mx="md"
+            w="auto"
+            gap="md"
+          >
             <Tooltip withArrow label="Settings">
               <ActionIcon
                 variant="subtle"
@@ -165,7 +165,7 @@ export default function NavbarSimple() {
                 <DarkModeIcon className={classes.secondaryButtonIcon} />
               </ActionIcon>
             </Tooltip>
-          </Group>
+          </Flex>
           <SettingsModal
             close={closeSettingsModal}
             opened={openedSettingsModal}
@@ -178,14 +178,6 @@ export default function NavbarSimple() {
           />
         </Navbar.Section>
       </Flex>
-
-      <Box onClick={() => setExpanded(!expanded)} mt="xxl">
-        {expanded ? (
-          <IconChevronLeft style={{ color: theme.colors.primary[5] }} />
-        ) : (
-          <IconChevronRight style={{ color: theme.colors.primary[5] }} />
-        )}
-      </Box>
     </>
   );
 }

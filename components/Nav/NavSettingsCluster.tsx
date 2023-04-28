@@ -11,7 +11,7 @@ export default function NavSettingsCluster({}) {
   const theme = useMantineTheme();
 
   return (
-    <Stack my={theme.spacing.xl}>
+    <Stack>
       <Select
         label={
           <Text

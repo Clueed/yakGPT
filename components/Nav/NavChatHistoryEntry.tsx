@@ -113,7 +113,7 @@ export function NavChatHistoryEntry({
               variant="subtle"
               pt={1} // fixing vertical alignment
               mr={"xxxs"} // not neccesarry on other side b/c of fade
-              size={isSmall ? 40 : 15}
+              size={15}
               onClick={(event) => {
                 event.preventDefault();
                 deleteChat(chat.id);
@@ -134,7 +134,7 @@ export function NavChatHistoryEntry({
           {editChatHistory && (
             <ActionIcon
               variant="subtle"
-              size={isSmall ? 40 : 15}
+              size={"1rem"}
               onClick={(event) => {
                 event.preventDefault();
                 setEditingChat(chat);
