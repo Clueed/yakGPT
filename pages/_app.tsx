@@ -127,18 +127,8 @@ export default function App(props: AppProps) {
             colorScheme,
             colors: {
               primary: dynamic,
-              dark: [
-                dark[0], // 0
-                dark[1], // 1
-                dark[2], // 2
-                dark[3], // 3
-                dark[4], // 4
-                dark[5], // 5
-                dark[6], // 6
-                dark[7], // 7
-                dark[8], // 8
-                dark[9], // 9
-              ],
+              light: light,
+              dark: dark,
             },
             spacing: {
               xxxs: "0.21875rem",

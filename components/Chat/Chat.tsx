@@ -8,11 +8,14 @@ import { setActiveChatId } from "@/stores/ChatActions";
 
 const useStyles = createStyles((theme: MantineTheme) => ({
   grid: {
-    fontSize: theme.fontSizes.md,
+    fontSize: theme.fontSizes.sm,
     display: "grid",
-    gridTemplateColumns: "1fr auto minmax(0, 75ch) auto 1fr",
+    gridTemplateColumns: "1fr auto minmax(0, 70ch) auto 1fr",
     columnGap: theme.spacing.xxs,
     rowGap: theme.spacing.md,
+
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.md,
   },
 }));
 
@@ -67,7 +70,7 @@ export default function Chat() {
   };
 
   return (
-    <ScrollArea>
+    <ScrollArea pt="lg">
       <div className={classes.grid}>
         {activeChat?.messages.map((message) => (
           <ChatMessage key={message.id} message={message} />

@@ -36,11 +36,11 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   message: {
     wordWrap: "break-word",
     lineHeight: 1.5,
-    color: theme.colors.primary[9],
-    paddingTop: theme.spacing.xs,
+
+    paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
-    paddingLeft: theme.spacing.sm,
-    paddingRight: theme.spacing.sm,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
     "& pre": {
       overflowX: "scroll",
     },
