@@ -3,32 +3,25 @@ import React from "react";
 
 const useStyles = createStyles((theme) => ({
   title: {
-    color: theme.colorScheme === "dark" ? theme.white : theme.black,
+    color:
+      theme.colorScheme === "light" ? theme.white : theme.colors.primary[7],
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     lineHeight: 1.2,
     fontWeight: 900,
-
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: rem(28),
-    },
-  },
-
-  highlight: {
-    position: "relative",
-    backgroundColor: theme.fn.variant({
-      variant: "light",
-      color: theme.primaryColor,
-    }).background,
+    display: "block",
+    width: "100%",
+    backgroundColor: theme.colors.blue[2],
     borderRadius: theme.radius.sm,
-    padding: `${rem(4)} ${rem(12)}`,
+    padding: `${theme.spacing.sm} 0`,
+    textAlign: "center",
   },
 }));
 
-export function YakTextLogo({ fontSize }: { fontSize: number }) {
+export function YakTextLogo({ fontSize }: { fontSize: number | string }) {
   const { classes } = useStyles();
   return (
-    <Title className={classes.title} size={rem(fontSize)}>
-      <span className={classes.highlight}>YakGPT</span>
+    <Title className={classes.title} fw={900} size={rem(fontSize)}>
+      YakGPT
     </Title>
   );
 }

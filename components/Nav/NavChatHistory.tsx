@@ -46,17 +46,11 @@ const useStyles = createStyles((theme) => ({
 
   groupLabel: {
     fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
+    fontSize: theme.fontSizes.sm,
     paddingLeft: theme.spacing.xxs,
     paddingRight: theme.spacing.xxs,
     color: theme.colors.primary[4],
     paddingBottom: theme.spacing.xxxs,
-
-    [theme.fn.smallerThan("sm")]: {
-      fontSize: theme.fontSizes.xl,
-      paddingTop: theme.spacing.xl,
-      paddingBottom: theme.spacing.xxs,
-    },
   },
 }));
 

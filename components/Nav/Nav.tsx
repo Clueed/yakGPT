@@ -24,6 +24,7 @@ import SettingsModal from "../Settings/SettingsModal";
 import NavChatHistory from "./NavChatHistory";
 import NavSettingsCluster from "./NavSettingsCluster";
 import { relative } from "path";
+import { YakTextLogo } from "../YakTextLogo";
 
 const useStyles = createStyles((theme) => ({
   navBar: {
@@ -83,6 +84,9 @@ export default function NavbarSimple() {
         gap="lg"
         onClick={() => setExpanded(!expanded)}
       >
+        <Navbar.Section>
+          <YakTextLogo fontSize="2rem" />
+        </Navbar.Section>
         <Navbar.Section>
           <Link href={"/"} passHref style={{ textDecoration: "none" }}>
             {expanded ? (

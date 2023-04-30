@@ -35,10 +35,6 @@ const useStyles = createStyles((theme) => ({
     [`&:hover:not(.${getStylesRef("linkActive")})`]: {
       backgroundColor: theme.colors.primary[1],
     },
-
-    [theme.fn.smallerThan("sm")]: {
-      padding: theme.spacing.md,
-    },
   },
 
   linkActive: {
@@ -64,11 +60,6 @@ const useStyles = createStyles((theme) => ({
     overflow: "hidden",
     whiteSpace: "nowrap",
     flexGrow: 1,
-
-    [theme.fn.smallerThan("sm")]: {
-      fontSize: theme.fontSizes.xl,
-      lineHeight: "40px", // depends on icons
-    },
   },
 
   icon: {
